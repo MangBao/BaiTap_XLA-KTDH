@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<!-- saved from url=(0074)https://www.stdio.vn/articles/opencv-cai-dat-va-vi-du-minh-hoa-su-dung-313 -->
+<html><style id="theme-nbgajjpk"></style><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" async="" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/analytics.js.download"></script><script async="" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/js"></script>
+<script>
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments)};
+				gtag("js", new Date());
+				gtag("config", "UA-52045105-1");
+				</script><!--<base href="https://www.stdio.vn">--><base href=".">
+<title>OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng | Bài viết | STDIO</title>
+<link rel="icon" type="image/ico" href="https://www.stdio.vn/makeup/shared/favicon.ico"><meta name="description" content="OpenCV (Open Computer Vision) là một thư viện mã nguồn mở chuyên dùng để xử lý các vấn đề liên quan đến thị giác máy tính. Nhờ một hệ thống các giải thuật chuyên biệt, tối ưu cho việc xử lý thị giác máy tính, vì vậy tính ứng dụng của OpenCV là rất lớn. Bài viết hướng dẫn bạn đọc cài đặt cùng với việc xây dựng ứng dụng mẫu có khả năng load và hiển thị ảnh.">
+<meta name="google-site-verification" content="X2UPPTs9ZPtdwO7zU96ACDvA3NuoFxO1INxk5ZjHc2I">
+<meta property="og:title" content="OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng | Bài viết | STDIO">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://www.stdio.vn/makeup/shared/img_logo_fb_default.png">
+<meta property="og:url" content="https://www.stdio.vn/articles/opencv-cai-dat-va-vi-du-minh-hoa-su-dung-313">
+<meta property="og:site_name" content="STDIO">
+<meta property="og:description" content="OpenCV (Open Computer Vision) là một thư viện mã nguồn mở chuyên dùng để xử lý các vấn đề liên quan đến thị giác máy tính. Nhờ một hệ thống các giải thuật chuyên biệt, tối ưu cho việc xử lý thị giác máy tính, vì vậy tính ứng dụng của OpenCV là rất lớn. Bài viết hướng dẫn bạn đọc cài đặt cùng với việc xây dựng ứng dụng mẫu có khả năng load và hiển thị ảnh.">
+<meta property="fb:app_id" content="694952747229279">
+<meta name="theme-color" content="#ff8800">
+
+<meta name="verify-admitad" content="1b536ea375">
+<meta http-equiv="content-language" content="vi">
+<meta name="robots" content="index,follow">
+<link type="text/css" rel="stylesheet" href="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/material-icons.css"><link type="text/css" rel="stylesheet" href="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/STDIOConstructor.css"><link type="text/css" rel="stylesheet" href="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/STDIOSDK.css"><link type="text/css" rel="stylesheet" href="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/STDIOUI.css"><link type="text/css" rel="stylesheet" href="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/styles.css"><link type="text/css" rel="stylesheet" href="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/xcontroller.css"><link type="text/css" rel="stylesheet" href="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/css_articles.css"><link type="text/css" rel="stylesheet" href="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/prettify.css"><link type="text/css" rel="stylesheet" href="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/css_promotions.css"><link type="text/css" rel="stylesheet" href="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/bugs-store.css"><script type="text/javascript" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/jquery-3.1.1.min.js.download"></script><script type="text/javascript" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/jquery.autogrowtextarea.min.js.download"></script><script type="text/javascript" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/STDIOSDK.js.download"></script><script type="text/javascript" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/STDIOUI.js.download"></script><script type="text/javascript" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/xcontroller.js.download"></script><script type="text/javascript" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/qrcode.min.js.download"></script><script type="text/javascript" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/prettify.js.download"></script><script type="text/javascript" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/js_script.js.download"></script><script>$(document).ready(function(){$('textarea').autoGrow();
+IO.COMPONENTS.STORAGE.Init();
+IO.COMPONENTS.STORAGE.SetItem('STDIO_REFFER_URL','https://www.google.com/');
+IO.COMPONENTS.ICONS.LOADING.Init('<i class="material-icons md-40">&#xE8B8;</i>');
+UI.POPUPS.Init('<i class="material-icons md-40">&#xE14C;</i>');
+IO.COMPONENTS.IMAGES.LAZY.Init();
+xcontroller.init();
+prettyPrint();
+if (IO.is_function('articles.ready')) {articles.ready('article','["313","3"]','null');};});</script></head>
+<body>
+<div class="wrapper">
+<div class="wrapper-xcontroller" id="wrapper-xcontroller" style="width: 101px; height: 50px;">
+<div class="xcontroller">
+<div class="tab-buttons">
+<div class="tab-button" onclick="xcontroller.toggle(this,&#39;id-tab-user&#39;)">
+<i class="material-icons"></i>
+</div>
+<div class="tab-button" onclick="xcontroller.toggle(this,&#39;id-tab-menu&#39;)">
+<i class="material-icons"></i>
+</div>
+</div> 
+<div class="tab-tables" style="display: none;">
+<div class="tab-table" id="id-tab-user" style="display: none;">
+<div class="table-element">
+<div class="row-profiles">
+<div class="profile-picture">
+<div class="profile-picture-container size50"><div class="mask off size50"><i class="material-icons"></i></div></div> </div>
+<div class="profile-content">
+<div class="name"><i>Bạn chưa đăng nhập</i></div>
+<div class="features">
+<div class="feature">
+<a href="https://www.stdio.vn/users/join/"><i class="material-icons md-14"></i> Đăng nhập</a>
+</div>
+<div class="feature">
+<a href="https://www.stdio.vn/users/join/"><i class="material-icons md-14"></i> Đăng ký</a>
+</div>
+</div>
+</div>
+</div> 
+</div>
+</div>
+<div class="tab-table" id="id-tab-menu" style="display: none;">
+<div class="table-element">
+<div class="row-users">
+<a class="users-feature" href="https://www.stdio.vn/projects">
+<div class="icon"><i class="material-icons"></i></div>
+<div class="text">Dự án</div>
+<div class="notification"></div>
+</a>
+</div> 
+<div class="row-users">
+<a class="users-feature" href="https://www.stdio.vn/iot">
+<div class="icon"><i class="material-icons"></i></div>
+<div class="text">Internet of Things</div>
+<div class="notification"></div>
+</a>
+<a class="users-feature" href="https://www.stdio.vn/virtual">
+<div class="icon"><i class="material-icons"></i></div>
+<div class="text">VR/AR</div>
+<div class="notification"></div>
+</a>
+</div> 
+<div class="row-menu">
+<div class="button-menu">
+<a href="https://www.stdio.vn/contact">
+<i class="material-icons"></i>
+Liên hệ
+</a>
+</div>
+<div class="button-menu active">
+<a href="https://www.stdio.vn/articles/categories/all-0/1">
+<i class="material-icons"></i>
+Tài liệu
+</a>
+</div>
+<div class="button-menu">
+<a href="https://www.stdio.vn/code">
+<i class="material-icons"></i>
+Code
+</a>
+</div>
+</div> 
+</div> 
+</div> 
+</div> 
+</div>
+</div>
+<header class="wrapper-section wrapper-header">
+<div class="float">
+<div id="id_center" class="center">
+<div id="id_logo" class="header-logo">
+<a href="https://www.stdio.vn/"><img src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/img_logo.svg" title="STDIO" alt="STDIO"></a>
+</div> 
+<div class="header-menu">
+<a class="menu-item " href="https://www.stdio.vn/projects">
+Dự án
+</a>
+<a class="menu-item active" href="https://www.stdio.vn/articles/categories/all-0/1">
+Tài liệu
+</a>
+<a class="menu-item " href="https://www.stdio.vn/code">Code</a>
+<a class="menu-item " href="https://www.stdio.vn/contact">Liên hệ</a>
+</div> 
+</div> 
+</div>
+</header>
+<section class="wrapper-section wrapper_introduction">
+<div class="center wrapper_introduction_center" id="id_wrapper_introduction_center">
+<div class="intro_left"><a href="https://www.stdio.vn/" target="_self"><i class="material-icons md-18"></i></a><a href="https://www.stdio.vn/articles" target="_self"> | Bài viết</a></div>
+</div>
+</section><section class="wrapper-section wrapper-content" itemscope="" itemtype="http://schema.org/Article">
+<div class="center">
+<div class="content-column-1">
+<div class="column-element">
+<div class="subject-blog-posts">
+<div class="post">
+<div class="post-meta">
+<a class="picture" href="https://training.stdio.vn/blog/chinh-xac-thi-ban-co-the-lam-gi-voi-python-39">
+<img alt="Chính Xác Thì Bạn Có Thể Làm Gì Với Python?" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/nhung-ung-dung-cua-python.png">
+</a>
+<div class="info">
+<h4><a href="https://training.stdio.vn/blog/chinh-xac-thi-ban-co-the-lam-gi-voi-python-39" target="_self">Chính Xác Thì Bạn Có Thể Làm Gì Với Python?</a></h4>
+</div>
+</div>
+<div class="post-content">
+Theo thời gian, tôi đã quan sát thấy có 3 ứng dụng phổ biến chính cho Python và trong thời đại này, ít nhất cũng phải có chút hiểu biết về 3 điều sau và phải thông thạo 1 trong 3 nếu bạn muốn làm việc lâu dài với Python </div>
+<div class="post-more">
+<a href="https://training.stdio.vn/blog/chinh-xac-thi-ban-co-the-lam-gi-voi-python-39">
+Xem thêm <i class="material-icons md-18"></i>
+</a>
+</div>
+</div>
+</div> 
+</div>
+</div>
+<div class="content-column-2">
+<div class="column-element">
+<div itemscope="" itemtype="http://schema.org/WebSite">
+<meta itemprop="url" content="https://www.stdio.vn/">
+<form itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction" class="search_form" action="https://www.stdio.vn/articles/search" method="get" onsubmit="return articles.search.onsubmit(this)">
+<meta itemprop="target" content="https://www.stdio.vn/articles/search/?q={q}">
+<input class="search_text" itemprop="query-input" type="text" name="q" placeholder="Tìm bài viết" value="" required="">
+<button type="submit" class="search-button"><i class="material-icons md-24"></i></button>
+</form>
+</div> </div>
+<div class="column-element">
+<div class="bugs-store L">
+<a class="product" href="https://www.bugs.vn/store/products/moc-khoa-illustrator" target="_blank">
+<div class="productBox">
+<div class="image">
+<img src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/moc-khoa-ai-ss-1.jpg">
+</div>
+<div class="info">
+<h3>Móc khóa Illustrator</h3>
+<p>99.000₫</p>
+<p>Miễn phí giao hàng</p>
+</div>
+</div>
+</a>
+<a class="product" href="https://www.bugs.vn/store/products/moc-khoa-photoshop" target="_blank">
+<div class="productBox">
+<div class="image">
+<img src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/moc-khoa-pts-ss-1.jpg">
+</div>
+<div class="info">
+<h3>Móc khóa Photoshop</h3>
+<p>99.000₫</p>
+<p>Miễn phí giao hàng</p>
+</div>
+</div>
+</a>
+<a class="product" href="https://www.bugs.vn/store/products/moc-khoa-cap-ngau-nhien" target="_blank">
+<div class="productBox">
+<div class="image">
+<img src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/moc-khoa-ngau-nhien-cap-thumb.jpg">
+</div>
+<div class="info">
+<h3>Móc khóa phần mềm</h3>
+<p>159.000₫</p>
+ <p>Miễn phí giao hàng</p>
+</div>
+</div>
+</a>
+</div>
+</div>
+
+<div class="column-element">
+<div class="article-box">
+<div class="article_meta">
+<div class="meta_info_feature">
+<a href="https://www.stdio.vn/articles/printing/313/opencv-cai-dat-va-vi-du-minh-hoa-su-dung" class="button" title="Tạo bản in bài viết" alt="Tạo bản in bài viết">
+<i class="material-icons md-18"></i> </a>
+<div class="button" onclick="UI.POPUPS.CUSTOMIZE.Show(&#39;id_popup_qr_code&#39;)" title="Xem trên di động" alt="Xem trên di động">
+<i class="material-icons md-18"></i> </div>
+<div id="button_bookmark" class="button_wide disable">
+<i class="material-icons md-18"></i> BOOKMARK </div>
+<div class="article_meta_info_mini">
+<a href="https://www.stdio.vn/articles/comments/articles-313/opencv-cai-dat-va-vi-du-minh-hoa-su-dung">#313</a>
+<i class="material-icons md-18"></i> <span itemprop="datePublished" title="2015-08-08 08:11:05" content="2015-08-08 08:11:05">
+08/08/2015 08:11 </span>
+<span itemprop="dateModified" title="2017-12-07 11:09:27" content="2017-12-07 11:09:27"></span>
+<i class="material-icons md-14">visibility</i> 36268 </div>
+</div>
+<h1 itemprop="name">OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng</h1>
+<div class="article_meta_info">
+<a href="https://www.stdio.vn/articles/categories/khoa-hoc-may-tinh-53/1">
+<span itemprop="articleSection"><b>Khoa học máy tính</b></span>
+</a>
+</div>
+</div>
+<div class="article_description">
+<span>
+<a href="https://www.stdio.vn/users/vu-quang-huy-3">Vũ Quang Huy</a>
+</span>
+<span>OpenCV (Open Computer Vision) là một thư viện mã nguồn mở chuyên dùng để xử lý các vấn đề liên quan đến thị giác máy tính. Nhờ một hệ thống các giải thuật chuyên biệt, tối ưu cho việc xử lý thị giác máy tính, vì vậy tính ứng dụng của OpenCV là rất lớn. Bài viết hướng dẫn bạn đọc cài đặt cùng với việc xây dựng ứng dụng mẫu có khả năng load và hiển thị ảnh.</span>
+</div>
+<div class="article_outline" id="id_article_outline">
+<div class="outline_title">Nội dung bài viết</div>
+<div class="outline_box" id="id_outline_box"><div class="outline_h2"><a href="https://www.stdio.vn/articles/opencv-cai-dat-va-vi-du-minh-hoa-su-dung-313#0-gioi-thieu">Giới thiệu</a></div><div class="outline_h2"><a href="https://www.stdio.vn/articles/opencv-cai-dat-va-vi-du-minh-hoa-su-dung-313#1-tien-de-bai-viet">Tiền đề bài viết</a></div><div class="outline_h2"><a href="https://www.stdio.vn/articles/opencv-cai-dat-va-vi-du-minh-hoa-su-dung-313#2-doi-tuong-huong-den">Đối tượng hướng đến</a></div><div class="outline_h2"><a href="https://www.stdio.vn/articles/opencv-cai-dat-va-vi-du-minh-hoa-su-dung-313#3-cai-dat-opencv">Cài đặt OpenCV</a></div><div class="outline_h2"><a href="https://www.stdio.vn/articles/opencv-cai-dat-va-vi-du-minh-hoa-su-dung-313#4-tich-hop-opencv-vao-project">Tích hợp OpenCV vào project</a></div><div class="outline_h2"><a href="https://www.stdio.vn/articles/opencv-cai-dat-va-vi-du-minh-hoa-su-dung-313#5-minh-hoa-su-dung-thu-vien-opencv">Minh họa sử dụng thư viện OpenCV</a></div><div class="outline_h2"><a href="https://www.stdio.vn/articles/opencv-cai-dat-va-vi-du-minh-hoa-su-dung-313#6-download-chuong-trinh-nbsp-mau">Download chương trình&nbsp;mẫu</a></div><div class="outline_h2"><a href="https://www.stdio.vn/articles/opencv-cai-dat-va-vi-du-minh-hoa-su-dung-313#7-tham-khao">Tham khảo</a></div></div>
+</div>
+<article class="article-content" itemprop="articleBody">
+<h2 id="0-gioi-thieu" name="0-gioi-thieu">Giới thiệu</h2>
+<p><span class="article_highlight"><strong>OpenCV</strong></span> (Open Computer Vision) là một thư viện mã nguồn mở chuyên dùng để xử lý các vấn đề liên quan đến thị giác máy tính. Nhờ một hệ thống các giải thuật chuyên biệt, tối ưu cho việc xử lý thị giác máy tính, vì vậy tính ứng dụng của OpenCV là rất lớn, có thể kể đến như:</p>
+<ul><li>Nhận dạng ảnh: nhận dạng khuôn mặt, các vật thể …</li>
+<li>Xử lý ảnh: khử nhiễu, điều chỉnh độ sáng …&nbsp;</li>
+<li>Nhận dạng cử chỉ</li>
+<li>Và còn rất nhiều ứng dụng khác nữa</li>
+</ul><p>Ta có thể sử dụng nhiều ngôn ngữ lập trình khác nhau để làm việc với OpenCV như C++, Java, Python, C# ...&nbsp;</p>
+<p>Bài viết này hướng dẫn bạn đọc cách tải, cài đặt OpenCV và viết chương trình minh họa sử dụng với C++. Phiên bản OpenCV trong bài viết này tôi sử dụng là <span class="article_highlight"><strong>OpenCV 3.0 for Windows</strong></span> <em>(build 04-06-2015)</em>, bạn đọc có thể dễ dàng tải về theo đường dẫn:</p>
+<p><a href="https://opencv.org/releases.html"><strong>OpenCV Download Page</strong></a></p>
+<h2 id="1-tien-de-bai-viet" name="1-tien-de-bai-viet">Tiền đề bài viết</h2>
+<p>Bài viết nằm trong chuỗi hướng dẫn thao tác với thư viện OpenCV.</p>
+<h2 id="2-doi-tuong-huong-den" name="2-doi-tuong-huong-den">Đối tượng hướng đến</h2>
+<p>Dành cho bạn đọc đã có kinh nghiệm về ngôn ngữ C++ và hiểu được các vận hành / sử dụng thư viện.</p>
+<p>Trong bài viết này tôi sử dụng <strong>Windows 8.1 Pro (64-bit)</strong> và <strong>Visual Stdio 2013 Community</strong>.</p>
+<h2 id="3-cai-dat-opencv" name="3-cai-dat-opencv">Cài đặt OpenCV</h2>
+<p>Thư viện OpenCV phiên bản 3.0 sau khi tải về có dạng <span class="article_highlight"><strong>opencv-3.0.0.exe</strong></span>. Tiến hành chạy file cài đặt, ta chọn đường dẫn để bộ cài đặt giải nén thư viện OpenCV</p>
+<p><img alt="ss_3" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/ss_3.png" style="width:496px;height:161px;"><br>
+&nbsp;<br>
+Quá trình giải nén diễn ra</p>
+<p><img alt="ss_1" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/ss_1.png" style="width:699px;height:356px;"><br>
+&nbsp;<br>
+Sau khi giải nén, ta thu được 2 folder:</p>
+<ul><li><strong>Build</strong>: chứa thư viện OpenCV đã được biên dịch thành thư viện cho nhiều ngôn ngữ khác nhau: C++, Java, Python.</li>
+<li><strong>Sources</strong>: tài liệu hướng dẫn, ví dụ và mã nguồn của OpenCV.</li>
+</ul><p><img alt="ss_9" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/ss_9.png" style="width:385px;height:162px;"></p>
+<p>Tiếp theo, ta cần tích hợp thư viện OpenCV vào trong project. Song song đó, để minh hoa việc sử dụng thư viện này, ta sẽ viết một ví dụ load và hiển thị ảnh sử dụng các API của OpenCV.</p>
+<h2 id="4-tich-hop-opencv-vao-project" name="4-tich-hop-opencv-vao-project">Tích hợp OpenCV vào project</h2>
+<p>Khởi tạo một project trống và đặt tên là <span class="article_highlight"><strong>STDIO_OpenCV_Sample</strong></span>&nbsp;</p>
+<p><img alt="ss_8" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/ss_8.png" style="width:730px;height:469px;"></p>
+<p>Tại thư mục chứa project, ta tạo folder <strong>Lib/opencv</strong> và copy toàn bộ nội dung ở đường dẫn <strong>&lt;extracted_path&gt;/build/x86/vc12</strong> và <strong>&lt;extracted_path&gt;/build/include</strong> vào. Trong đó, <strong>&lt;extracted_path&gt;</strong> là đường dẫn cài đặt OpenCV ở trên.</p>
+<p>Sau khi copy, ta có được cấu trúc folder như sau</p>
+<p><img alt="ss_6" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/ss_6.png" style="width:392px;height:155px;"></p>
+<p>Tại giao diện của Visual Studio, chọn <strong>Project Properties &gt; Configuration Properties &gt; C/C++ &gt; General &gt; Addition Include Directories</strong>, ta thêm đường dẫn <strong>$(ProjectDir)\Lib\opencv\include</strong>&nbsp;</p>
+<p><img alt="ss_4" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/ss_4.png" style="width:725px;height:452px;"></p>
+<p>Tiếp theo, cũng tại trang Project Properties, chọn <strong>Linker &gt; General &gt; Addition Library Directories</strong>, thêm vào đường dẫn <strong>$(ProjectDir)\Lib\opencv\lib</strong>&nbsp;</p>
+<p><img alt="ss_2" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/ss_2.png" style="width:725px;height:452px;"></p>
+<p>Và tại <strong>Linker &gt; Input</strong>, ta thêm vào các thư viện sau</p>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="pln">opencv_ts300d</span><span class="pun">.</span><span class="pln">lib</span></li><li class="L1"><span class="pln">opencv_world300d</span><span class="pun">.</span><span class="pln">lib</span></li></ol></pre>
+<p><img alt="ss_10" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/ss_10.png" style="width:725px;height:452px;"></p>
+<p>Cuối cùng, ta copy file <strong>opencv_world300d.dll</strong> trong <strong>Lib\opencv\bin</strong> vào folder <strong>Debug </strong>của project.</p>
+<p>Tới đây, ta đã kết thúc việc tích hợp thư viện OpenCV vào project. Để kiểm tra tính chính xác của công việc ta đã làm, ta sẽ viết một ví dụ nhỏ sử dụng OpenCV.</p>
+<h2 id="5-minh-hoa-su-dung-thu-vien-opencv" name="5-minh-hoa-su-dung-thu-vien-opencv">Minh họa sử dụng thư viện OpenCV</h2>
+<p>Trong ví dụ minh họa này, chương trình của ta có khả năng:</p>
+<ul><li>Load một ảnh bất kì</li>
+<li>Đọc vào đối tượng <span class="article_code">Mat</span> của OpenCV</li>
+<li>Hiển thị lên màn hình</li>
+</ul><p>Ta tạo file <span class="article_highlight"><strong>sample.cpp</strong></span> có nội dung như sau:</p>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="com">#include</span><span class="pln"> </span><span class="str">&lt;stdio.h&gt;</span></li><li class="L1"><span class="com">#include</span><span class="pln"> </span><span class="str">"opencv2/core/core.hpp"</span></li><li class="L2"><span class="com">#include</span><span class="pln"> </span><span class="str">"opencv2/highgui/highgui.hpp"</span></li><li class="L3"><span class="pln">&nbsp;</span></li><li class="L4"><span class="kwd">using</span><span class="pln"> </span><span class="kwd">namespace</span><span class="pln"> cv</span><span class="pun">;</span></li><li class="L5"><span class="pln">&nbsp;</span></li><li class="L6"><span class="kwd">int</span><span class="pln"> main</span><span class="pun">()</span></li><li class="L7"><span class="pun">{</span><span class="pln">        </span></li><li class="L8"><span class="pln">    </span><span class="com">// Read image</span></li><li class="L9"><span class="pln">    </span><span class="typ">Mat</span><span class="pln"> image </span><span class="pun">=</span><span class="pln"> imread</span><span class="pun">(</span><span class="str">"Lena.png"</span><span class="pun">,</span><span class="pln"> CV_LOAD_IMAGE_COLOR</span><span class="pun">);</span></li><li class="L0"><span class="pln">&nbsp;</span></li><li class="L1"><span class="pln">    </span><span class="com">// Check for valid</span></li><li class="L2"><span class="pln">    </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">image</span><span class="pun">.</span><span class="pln">data</span><span class="pun">)</span></li><li class="L3"><span class="pln">    </span><span class="pun">{</span></li><li class="L4"><span class="pln">        printf</span><span class="pun">(</span><span class="str">"Could not open or find the image\n"</span><span class="pun">);</span></li><li class="L5"><span class="pln">        </span><span class="kwd">return</span><span class="pln"> </span><span class="pun">-</span><span class="lit">1</span><span class="pun">;</span></li><li class="L6"><span class="pln">    </span><span class="pun">}</span></li><li class="L7"><span class="pln">&nbsp;</span></li><li class="L8"><span class="pln">    </span><span class="com">// Create and show image in window    </span></li><li class="L9"><span class="pln">    imshow</span><span class="pun">(</span><span class="str">"STDIO OpenCV Sample"</span><span class="pun">,</span><span class="pln"> image</span><span class="pun">);</span></li><li class="L0"><span class="pln">&nbsp;</span></li><li class="L1"><span class="pln">    </span><span class="com">// Wait input and exit</span></li><li class="L2"><span class="pln">    waitKey</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span></li><li class="L3"><span class="pln">&nbsp;</span></li><li class="L4"><span class="pln">    </span><span class="kwd">return</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></li><li class="L5"><span class="pun">}</span></li></ol></pre>
+<p><strong>Dòng 10:</strong> đọc file ảnh lên với hàm <span class="article_code">imread</span>&nbsp;cùng tùy chọn <span class="article_code">CV_LOAD_IMAGE_COLOR</span> (đọc ảnh màu). Hàm này trả về một ma trận các pixel màu. Ý nghĩa của các tùy chọn</p>
+<ul><li><span class="article_code">CV_LOAD_IMAGE_UNCHANGED</span>: load ảnh bình thường (bao gồm cả kênh alpha nếu có)</li>
+<li><span class="article_code">CV_LOAD_IMAGE_GRAYSCALE</span>: load ảnh và chuyển về trắng đen</li>
+<li><span class="article_code">CV_LOAD_IMAGE_COLOR</span>: load ảnh phần màu (RGB), bỏ qua kênh alpha</li>
+</ul><p><strong>Dòng 13 – 17:</strong> kiểm tra việc đọc ảnh có thành công hay không.</p>
+<p><strong>Dòng 20:</strong> &nbsp;Hiển thị ảnh đã load sử dụng hàm <span class="article_code">imshow</span> với tham số là tiêu đề cửa sổ và nội dung ảnh.</p>
+<p>Kết quả của đoạn chương trình trên</p>
+<p><img alt="ss_7" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/ss_7.png" style="width:529px;height:552px;"></p>
+<p>Thử thay đổi tùy chọn tại dòng 10 từ <span class="article_code">CV_LOAD_IMAGE_COLOR</span> thành <span class="article_code">CV_LOAD_IMAGE_GRAYSCALE</span> thì ta được</p>
+<p><img alt="ss_5" src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/ss_5.png" style="width:529px;height:552px;"></p>
+<h2 id="6-download-chuong-trinh-nbsp-mau" name="6-download-chuong-trinh-nbsp-mau">Download chương trình&nbsp;mẫu</h2>
+<p>Để thuận tiên cho bạn đọc, chương trình mẫu được tải về gồm 2 phiên bản</p>
+<ul><li><a href="https://drive.google.com/file/d/0Bw4vxC-44InLcmFzaTdOWVpFLWs/view?usp=sharing"><strong>STDIO_OpenCV_Sample.zip</strong></a> <span style="color:#FF0000;"><strong>(127 MB)</strong></span>: bản đầy đủ</li>
+<li><strong><a href="https://www.stdio.vn/statics/external_data/files/pages/articles/2015/313/content/STDIO_OpenCV_Sample_Compact.zip">STDIO_OpenCV_Sample_Compact.zip</a></strong> <strong><span style="color:#FF0000;">(485 KB)</span></strong>: tương tự như bản đầy đủ nhưng đã <strong>loại bỏ thư mục Lib và Debug</strong>, bạn đọc chỉ cần copy lại nội dung như hướng dẫn trên là có thể chạy được.</li>
+</ul><h2 id="7-tham-khao" name="7-tham-khao">Tham khảo</h2>
+<p>http://docs.opencv.org/doc/tutorials/introduction/display_image/display_image.html - 8/8/2015</p> </article>
+<div class="article-tag">
+<div class="ele-tag"><i class="material-icons md-18">attachment</i> <b>Tags</b></div>
+<div class="ele-tag" id="" title="">opencv</div><div class="ele-tag" id="" title="">computer vision</div><div class="ele-tag" id="" title="">thị giác máy tính</div> </div>
+</div>
+<div class="article_author" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+<a class="author_title" href="https://www.stdio.vn/users/vu-quang-huy-3">
+<span itemprop="name">Vũ Quang Huy</span>
+</a>
+</div> </div>
+<div class="column-element">
+<div class="article-promotion">
+<div class="icon">
+<img src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/article-promotion-icon.svg">
+</div>
+<div class="content">
+<h3>Bạn cần hỗ trợ các dự án kết nối không dây?</h3>
+<p>
+Quí doanh nghiệp, cá nhân cần hỗ trợ, hợp tác các dự án IoT, kết nối không dây. Vui lòng <a href="https://www.stdio.vn/contact">liên hệ</a>, hoặc gọi trực tiếp 0942.111912.
+</p>
+<ul>
+<li><b>TỪ KHÓA</b></li>
+<li>Arduino</li>
+<li>ESP32</li>
+<li>ESP8266</li>
+<li>Wifi</li>
+<li>Bluetooth</li>
+<li>Zigbee</li>
+<li>Raspberry Pi</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="column-element">
+<div class="comments-box">
+<div class="title_large title_color_orange">
+<span><i class="material-icons md-18"></i> THẢO LUẬN</span>
+</div>
+<div class="comments-component" id="id-comments-component">
+<div class="comment_input_container" id="id_comment_input_container">
+	<div class="comment_input">
+		<div class="comment">
+			<div class="comment_input_picture">
+				<div class="profile-picture-container size64"><div class="mask off size64"><i class="material-icons"></i></div></div>			</div>
+			<div class="comment_input_content">
+				<textarea rows="5" maxlength="32768" placeholder="..." disabled="" style="overflow: hidden; min-height: 5em; height: 32px;"></textarea><div class="autogrow-textarea-mirror" style="display: none; overflow-wrap: break-word; white-space: normal; padding: 5px 10px; width: 562px; font-family: roboto, Arial, Helvetica, sans-serif; font-size: 13.6px; line-height: normal;">.<br>.</div>
+			</div>
+		</div>
+		<div class="function">
+			<div class="function_panel">
+					<a href="https://www.stdio.vn/users/join/" class="button_wide">ĐĂNG NHẬP</a>
+			<div class="button_wide disable">GỬI</div>
+					</div>
+		</div> <!-- function -->
+	</div>
+</div> <!-- comment_input_container -->
+
+<div class="comments_container" id="id_comments_container-313">
+	
+</div> <!-- comments_container --></div> 
+</div>
+</div>
+</div>
+<div class="content-column-3">
+<div class="column-element">
+<div class="article-promo-ele">
+<div class="title_base title_color_orange"><span><i class="material-icons"></i> Bài cùng loại</span></div>
+<ul>
+<li><a href="https://www.stdio.vn/articles/loc-anh-bang-phep-tuong-quan-va-tich-chap-562">
+Lọc Ảnh Bằng Phép Tương Quan Và Tích Chập <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+<li><a href="https://www.stdio.vn/articles/ly-do-ton-tai-data-alignment-struct-alignment-memory-alignment-529">
+Lý Do Tồn Tại Data Alignment (Struct Alignment, Memory Alignment) <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+<li><a href="https://www.stdio.vn/articles/so-luoc-ve-to-chuc-ieee-524">
+Sơ Lược Về Tổ Chức IEEE <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+<li><a href="https://www.stdio.vn/articles/co-ban-ve-anh-cach-open-cv-luu-tru-du-lieu-anh-463">
+Cơ Bản Về Ảnh - Cách OpenCV Lưu Trữ Dữ Liệu Ảnh <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+<li><a href="https://www.stdio.vn/articles/toan-tu-khung-xuong-trong-anh-nhi-phan-skeleton-binary-morphology-462">
+Toán Tử Khung Xương Trong Ảnh Nhị Phân - Skeleton Binary Morphology <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+<li><a href="https://www.stdio.vn/articles/loc-gaussian-giao-dien-don-gian-qt-opencv-447">
+Lọc Gaussian - Giao Diện Đơn Giản: Qt + OpenCV <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+<li><a href="https://www.stdio.vn/articles/gioi-thieu-ve-mo-hinh-svm-436">
+Giới Thiệu Về Mô Hình SVM <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+</ul>
+</div>
+</div> <div class="column-element">
+<div class="users_inspiration">
+<div class="inspiration_icon"><i class="material-icons md-36"></i></div>
+<div class="inspiration_content">
+Nếu bạn đang suy nghĩ mà không cần viết, thì bạn chỉ nghĩ là bạn đang nghĩ. <a href="https://vi.wikipedia.org/wiki/Linus_Torvalds" title="Nếu bạn đang suy nghĩ mà không cần viết, thì bạn chỉ nghĩ là bạn đang nghĩ." alt="Nếu bạn đang suy nghĩ mà không cần viết, thì bạn chỉ nghĩ là bạn đang nghĩ.">
+<span>Linus Torvalds</span>
+</a>
+</div>
+</div>
+</div>
+<div class="column-element">
+<a href="https://www.stdio.vn/users/join/" class="users_recommend_join">
+<div class="recommend_icon">
+<i class="material-icons md-36"></i><span>Tham gia STDIO</span> </div>
+<div class="recommend_content">
+Đăng ký thành viên để sử dụng đầy đủ dịch vụ, thảo luận, học hỏi tại STDIO. </div>
+</a>
+</div>
+<div class="column-element"></div>
+</div>
+</div>
+</section>
+<div id="id_popup_qr_code" class="ui_popups">
+<div class="ui_popups_background"></div>
+<div class="ui_popups_content">
+<div class="ui_popups_content_stack">
+<div class="popup_description">Quét mã để đọc trên điện thoại.</div>
+</div>
+<div class="ui_popups_customize width_310 active">
+<div class="ui_popups_customize_stack">
+<div id="id_qr_code"></div>
+</div>
+<div class="ui_popups_customize_stack">
+<div class="alert_button" onclick="UI.POPUPS.CUSTOMIZE.Hide(&#39;id_popup_qr_code&#39;)">ĐÓNG</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="wrapper-section wrapper-footer">
+<div id="id_center" class="center">
+<div class="footer-top">
+<div class="footer-column-2x">
+<div class="footer-column">
+<div class="title">Trang chính</div>
+<ul>
+<li><a href="https://www.stdio.vn/iot">Internet of Things</a></li>
+<li><a href="https://www.stdio.vn/blog">Blog</a></li>
+<li><a href="https://www.stdio.vn/about">STDIO?</a></li>
+<li><a href="https://www.stdio.vn/contact">Liên Hệ</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<div class="title">Dịch vụ</div>
+<ul>
+<li><a href="https://www.stdio.vn/projects/stdio-arduino-uploader">STDIO Arduino Uploader</a></li>
+<li><a href="https://www.stdio.vn/iot">Internet of Things</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<div class="title">Dịch vụ khác</div>
+<ul>
+<li><a href="https://express.stdio.vn/">Giải pháp phần mềm</a></li>
+<li><a href="https://training.stdio.vn/">Đào tạo lập trình</a></li>
+<li><a href="https://www.bugs.vn/">Chia sẻ mã nguồn</a></li>
+</ul>
+</div>
+</div> 
+<div class="footer-column-2x">
+<div class="footer-column">
+<div class="title">Cộng đồng</div>
+<ul>
+<li><a href="https://www.facebook.com/stdio.vn">STDIO page</a></li>
+<li><a href="https://www.facebook.com/training.stdio.vn">STDIO Training page</a></li>
+
+</ul>
+</div>
+<div class="footer-column">
+<ul>
+<li><a href="https://www.stdio.vn/about/read/policy">Chính Sách Bảo Mật</a></li>
+<li><a href="https://www.stdio.vn/about/read/terms">Chính Sách Hoạt Động</a></li>
+</ul>
+</div>
+</div> 
+</div> 
+<div class="footer-middle">
+<span><b>Công ty TNHH STDIO</b><br>Địa chỉ liên hệ<br>
+A18, Trung Đông plaza, 30, Trịnh Đình Thảo, Hòa Thạnh, Tân Phú, Hồ Chí Minh<br>028.36205514 - 0942.111.912 - developer@stdio.vn</span><br>
+<span>Địa chỉ công ty<br>383/1 Quang Trung, Phường 10, Quận Gò Vấp, Thành phố Hồ Chí Minh<br>Số giấy phép ĐKKD: 0311563559 do sở Kế hoạch và Đầu Tư TPHCM cấp ngày 23/02/2012</span><br>
+</div>
+<div class="footer-bottom">
+<div class="gov"><a href="http://online.gov.vn/CustomWebsiteDisplay.aspx?DocId=23061"><img src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/logo_bct.png"></a></div>
+<div class="dmca"></div>
+</div> 
+<div class="footer-bottom">
+<div class="logo"><a href="https://www.stdio.vn/"><img src="./OpenCV – Cài Đặt Và Ví Dụ Minh Họa Sử Dụng _ Bài viết _ STDIO_files/img_logo.svg" title="STDIO" alt="STDIO"></a></div>
+<div class="credit">©STDIO, 2013-2020</div>
+</div> 
+</div> 
+</footer>
+</div> 
+
+<div id="id_fc3233e203d1d0731cd1bac4edc3a3f4" style="display:none">{"STDIO_REFFER_URL":"https%3A//www.google.com/","IO_COMPONENTS_ICONS_LOADING_ICON":"%3Ci%20class%3D%22material-icons%20md-40%22%3E%26%23xE8B8%3B%3C/i%3E","comments_post_feature":"ARTICLES","comments_post_owner_id":"3","comments_post_order":"asc","comments_post_is_loaded":"1"}</div></body></html>

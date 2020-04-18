@@ -1,0 +1,82 @@
+var xcontroller = {
+
+    toggle: function (tab_button, id_tab_table) {
+        var visible = $('#' + id_tab_table).css('display') != 'none';
+
+        xcontroller.reset();
+        
+        if (visible == false) {
+
+            if(!window.devicePixelRatio)
+                window.devicePixelRatio = 1;
+
+            var width = 300;
+            var height = $(window).height() * window.devicePixelRatio;
+
+            $('#wrapper-xcontroller').width(width);
+            $('#wrapper-xcontroller').height(height + 60); // + 60 to prevent Chrome Mobile height change.
+
+            $("#wrapper-xcontroller").addClass('active');
+            $(tab_button).addClass('active');
+
+            $(".tab-tables").show();
+            $('#' + id_tab_table).show();
+        }
+    },
+
+    reset: function () {
+        var width = 1;
+        var height = 0;
+        var h_element;
+
+        $('#wrapper-xcontroller .xcontroller .tab-buttons > *').each(function () { width += $(this).width(); });
+        $('#wrapper-xcontroller .xcontroller .tab-buttons > *').each(function () {
+            ego = $(this);
+            if (ego.outerHeight() > height) {
+                h_element = this;
+                height = ego.outerHeight();
+            }
+        });
+
+        $('#wrapper-xcontroller').width(width);
+        $('#wrapper-xcontroller').height(height);
+
+        $("#wrapper-xcontroller").removeClass('active');
+        $(".tab-button").removeClass('active');
+        $(".tab-tables").hide();
+        $(".tab-table").hide();
+    },
+
+    init: function () {
+
+        xcontroller.reset();
+
+        $(window).resize(function () {
+            var visible = $('.tab-tables').css('display') != 'none';
+            if (visible == true) {
+
+                if(!window.devicePixelRatio)
+                    window.devicePixelRatio = 1;
+
+                var width = 300;
+                var height = $(window).height() * window.devicePixelRatio;
+
+                $('#wrapper-xcontroller').width(width);
+                $('#wrapper-xcontroller').height(height + 60); // + 60 to prevent Chrome Mobile height change.
+            }
+        });
+
+        $(document).on('touchstart', function (event) {
+            if (!$(event.target).closest('#wrapper-xcontroller').length) {
+                xcontroller.reset();
+            }
+        }); // close xcontroller on mobile
+
+        $(document).mouseup(function (e) {
+            var node = $("#wrapper-xcontroller");
+            if (!node.is(e.target) && node.has(e.target).length === 0) {
+                xcontroller.reset();
+            }
+        }); // close xcontroller on pc
+    }
+}
