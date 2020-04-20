@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<!-- saved from url=(0084)https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/ -->
+<html><style id="theme-nbgajjpk"></style><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>OpenCV - Grayscale, Binary Image, Adaptive Threshold | GMO-Z.com Vietnam Lab Center</title>
+    <meta name="description" content="Biến đổi ảnh màu về thành ảnh xám (grayscale image) và ảnh đen trắng (black and white), sử dụng apdative threshold.">
+    <meta property="fb:app_id" content="1243367942363425">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="duCCqsDAWLg3POOfPMr6JiS4R0g0CjouGGM3fhsG0-0">
+    <link rel="shortcut icon" href="https://blog.vietnamlab.vn/favicon.ico">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" type="text/css" href="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/atom-one-dark.min.css">
+    <link rel="stylesheet" type="text/css" href="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/screen.css">
+
+    <script src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/cb=gapi.loaded_1" async=""></script><script src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/cb=gapi(1).loaded_0" async=""></script><script async="" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/async-ads.js.download"></script><script async="" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/analytics.js.download"></script><script src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/sdk.js.download" async="" crossorigin="anonymous"></script><script type="text/javascript" async="" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/f.txt"></script><script id="twitter-wjs" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/widgets.js.download"></script><script id="facebook-jssdk" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/sdk.js(1).download"></script><script type="text/javascript" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/jquery.min.js.download"></script>
+
+    <meta name="description" content="Biến đổi ảnh màu về thành ảnh xám (grayscale image) và ảnh đen trắng (black and white), sử dụng apdative threshold.">
+    <link rel="shortcut icon" href="https://blog.vietnamlab.vn/favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/amp/">
+    
+    <meta property="og:site_name" content="VNLAB Blog">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="OpenCV - Grayscale, Binary Image, Adaptive Threshold">
+    <meta property="og:description" content="Biến đổi ảnh màu về thành ảnh xám (grayscale image) và ảnh đen trắng (black and white), sử dụng apdative threshold.">
+    <meta property="og:url" content="https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/">
+    <meta property="og:image" content="https://drive.google.com/uc?id=1combYaowazUEQhEZUHtxNJGvaLoPRgQS&amp;export=download">
+    <meta property="article:published_time" content="2018-02-27T01:39:50.000Z">
+    <meta property="article:modified_time" content="2019-01-11T10:14:59.000Z">
+    <meta property="article:tag" content="OpenCV">
+    <meta property="article:tag" content="grayscale">
+    <meta property="article:tag" content="binary image">
+    <meta property="article:tag" content="threshold">
+    <meta property="article:tag" content="convert color">
+    <meta property="article:tag" content="adaptive threshold">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="OpenCV - Grayscale, Binary Image, Adaptive Threshold">
+    <meta name="twitter:description" content="Biến đổi ảnh màu về thành ảnh xám (grayscale image) và ảnh đen trắng (black and white), sử dụng apdative threshold.">
+    <meta name="twitter:url" content="https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/">
+    <meta name="twitter:image" content="https://drive.google.com/uc?id=1combYaowazUEQhEZUHtxNJGvaLoPRgQS&amp;export=download">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="H.M.D">
+    <meta name="twitter:label2" content="Filed under">
+    <meta name="twitter:data2" content="OpenCV, grayscale, binary image, threshold, convert color, adaptive threshold">
+    <meta property="og:image:width" content="900">
+    <meta property="og:image:height" content="300">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "VNLAB Blog",
+        "logo": {
+            "@type": "ImageObject",
+            "url": "https://blog.vietnamlab.vn/favicon.ico",
+            "width": 60,
+            "height": 60
+        }
+    },
+    "author": {
+        "@type": "Person",
+        "name": "H.M.D",
+        "url": "https://blog.vietnamlab.vn/author/duonghm/",
+        "sameAs": []
+    },
+    "headline": "OpenCV - Grayscale, Binary Image, Adaptive Threshold",
+    "url": "https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/",
+    "datePublished": "2018-02-27T01:39:50.000Z",
+    "dateModified": "2019-01-11T10:14:59.000Z",
+    "image": {
+        "@type": "ImageObject",
+        "url": "https://drive.google.com/uc?id=1combYaowazUEQhEZUHtxNJGvaLoPRgQS&export=download",
+        "width": 900,
+        "height": 300
+    },
+    "keywords": "OpenCV, grayscale, binary image, threshold, convert color, adaptive threshold",
+    "description": "Biến đổi ảnh màu về thành ảnh xám (grayscale image) và ảnh đen trắng (black and white), sử dụng apdative threshold.",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://blog.vietnamlab.vn/"
+    }
+}
+    </script>
+
+    <script src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/ghost-sdk.min.js.download"></script>
+<script>
+ghost.init({
+	clientId: "ghost-frontend",
+	clientSecret: "d20a80c64f21"
+});
+</script>
+    <meta name="generator" content="Ghost 1.25">
+    <link rel="alternate" type="application/rss+xml" title="VNLAB Blog" href="https://blog.vietnamlab.vn/rss/">
+<script src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/cse_element__vi.js.download" type="text/javascript"></script><link type="text/css" rel="stylesheet" href="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/default+vi.css"><link type="text/css" rel="stylesheet" href="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/default.css"><style type="text/css">.gsc-control-cse{font-family:arial, sans-serif}.gsc-control-cse .gsc-table-result{font-family:arial, sans-serif}.gsc-refinementsGradient{background:linear-gradient(to left,rgba(255,255,255,1),rgba(255,255,255,0))}.gsc-control-cse{border-color:#FFFFFF;background-color:#FFFFFF}input.gsc-input,.gsc-input-box,.gsc-input-box-hover,.gsc-input-box-focus{border-color:#D9D9D9}.gsc-search-button-v2,.gsc-search-button-v2:hover,.gsc-search-button-v2:focus{border-color:#666666;background-color:#CECECE;background-image:none;filter:none}.gsc-search-button-v2 svg{fill:#FFFFFF}.gsc-tabHeader.gsc-tabhActive,.gsc-refinementHeader.gsc-refinementhActive{color:#CCCCCC;border-color:#CCCCCC;background-color:#FFFFFF}.gsc-tabHeader.gsc-tabhInactive,.gsc-refinementHeader.gsc-refinementhInactive{color:#CCCCCC;border-color:#CCCCCC;background-color:#FFFFFF}.gsc-webResult.gsc-result,.gsc-results .gsc-imageResult{border-color:#FFFFFF;background-color:#FFFFFF}.gsc-webResult.gsc-result:hover,.gsc-imageResult:hover{border-color:#FFFFFF;background-color:#FFFFFF}.gs-webResult.gs-result a.gs-title:link,.gs-webResult.gs-result a.gs-title:link b,.gs-imageResult a.gs-title:link,.gs-imageResult a.gs-title:link b{color:#0000CC}.gs-webResult.gs-result a.gs-title:visited,.gs-webResult.gs-result a.gs-title:visited b,.gs-imageResult a.gs-title:visited,.gs-imageResult a.gs-title:visited b{color:#0000CC}.gs-webResult.gs-result a.gs-title:hover,.gs-webResult.gs-result a.gs-title:hover b,.gs-imageResult a.gs-title:hover,.gs-imageResult a.gs-title:hover b{color:#0000CC}.gs-webResult.gs-result a.gs-title:active,.gs-webResult.gs-result a.gs-title:active b,.gs-imageResult a.gs-title:active,.gs-imageResult a.gs-title:active b{color:#0000CC}.gsc-cursor-page{color:#0000CC}a.gsc-trailing-more-results:link{color:#0000CC}.gs-webResult .gs-snippet,.gs-imageResult .gs-snippet,.gs-fileFormatType{color:#000000}.gs-webResult div.gs-visibleUrl,.gs-imageResult div.gs-visibleUrl{color:#008000}.gs-webResult div.gs-visibleUrl-short{color:#008000}.gs-webResult div.gs-visibleUrl-short{display:none}.gs-webResult div.gs-visibleUrl-long{display:block}.gs-promotion div.gs-visibleUrl-short{display:none}.gs-promotion div.gs-visibleUrl-long{display:block}.gsc-cursor-box{border-color:#FFFFFF}.gsc-results .gsc-cursor-box .gsc-cursor-page{border-color:#CCCCCC;background-color:#FFFFFF;color:#CCCCCC}.gsc-results .gsc-cursor-box .gsc-cursor-current-page{border-color:#CCCCCC;background-color:#FFFFFF;color:#CCCCCC}.gsc-webResult.gsc-result.gsc-promotion{border-color:#336699;background-color:#FFFFFF}.gsc-completion-title{color:#0000CC}.gsc-completion-snippet{color:#000000}.gs-promotion a.gs-title:link,.gs-promotion a.gs-title:link *,.gs-promotion .gs-snippet a:link{color:#0000CC}.gs-promotion a.gs-title:visited,.gs-promotion a.gs-title:visited *,.gs-promotion .gs-snippet a:visited{color:#0000CC}.gs-promotion a.gs-title:hover,.gs-promotion a.gs-title:hover *,.gs-promotion .gs-snippet a:hover{color:#0000CC}.gs-promotion a.gs-title:active,.gs-promotion a.gs-title:active *,.gs-promotion .gs-snippet a:active{color:#0000CC}.gs-promotion .gs-snippet,.gs-promotion .gs-title .gs-promotion-title-right,.gs-promotion .gs-title .gs-promotion-title-right *{color:#000000}.gs-promotion .gs-visibleUrl,.gs-promotion .gs-visibleUrl-short{color:#008000}.gcsc-find-more-on-google{color:#0000CC}.gcsc-find-more-on-google-magnifier{fill:#0000CC}</style><style id="fit-vids-style">.fluid-width-video-wrapper{width:100%;position:relative;padding:0;}.fluid-width-video-wrapper iframe,.fluid-width-video-wrapper object,.fluid-width-video-wrapper embed {position:absolute;top:0;left:0;width:100%;height:100%;}</style><script src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/article.js.download" async=""></script><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_dialog_advanced{border-radius:8px;padding:10px}.fb_dialog_content{background:#fff;color:#373737}.fb_dialog_close_icon{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{left:5px;right:auto;top:5px}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent}.fb_dialog_close_icon:active{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{height:100%;left:0;margin:0;overflow:visible;position:absolute;top:-10000px;transform:none;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{background:none;height:auto;min-height:initial;min-width:initial;width:auto}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{clear:both;color:#fff;display:block;font-size:18px;padding-top:20px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .4);bottom:0;left:0;min-height:100%;position:absolute;right:0;top:0;width:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_mobile .fb_dialog_iframe{position:sticky;top:0}.fb_dialog_content .dialog_header{background:linear-gradient(from(#738aba), to(#2c4987));border-bottom:1px solid;border-color:#043b87;box-shadow:white 0 1px 1px -1px inset;color:#fff;font:bold 14px Helvetica, sans-serif;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:linear-gradient(from(#4267B2), to(#2a4887));background-clip:padding-box;border:1px solid #29487d;border-radius:3px;display:inline-block;line-height:18px;margin-top:3px;max-width:85px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{background:none;border:none;color:#fff;font:bold 12px Helvetica, sans-serif;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #4a4a4a;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f5f6f7;border:1px solid #4a4a4a;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://static.xx.fbcdn.net/rsrc.php/v3/yD/r/t-wz8gw1xG1.png);background-position:50% 50%;background-repeat:no-repeat;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}</style><style type="text/css">.gscb_a{display:inline-block;font:27px/13px arial,sans-serif}.gsst_a .gscb_a{color:#a1b9ed;cursor:pointer}.gsst_a:hover .gscb_a,.gsst_a:focus .gscb_a{color:#36c}.gsst_a{display:inline-block}.gsst_a{cursor:pointer;padding:0 4px}.gsst_a:hover{text-decoration:none!important}.gsst_b{font-size:16px;padding:0 2px;position:relative;user-select:none;-webkit-user-select:none;white-space:nowrap}.gsst_e{vertical-align:middle;opacity:0.55;}.gsst_a:hover .gsst_e,.gsst_a:focus .gsst_e{opacity:0.72;}.gsst_a:active .gsst_e{opacity:1;}.gsst_f{background:white;text-align:left}.gsst_g{background-color:white;border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-webkit-box-shadow:0 2px 4px rgba(0,0,0,0.2);margin:-1px -3px;padding:0 6px}.gsst_h{background-color:white;height:1px;margin-bottom:-1px;position:relative;top:-1px}.gsib_a{width:100%;padding:4px 6px 0}.gsib_a,.gsib_b{vertical-align:top}.gssb_c{border:0;position:absolute;z-index:989}.gssb_e{border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-webkit-box-shadow:0 2px 4px rgba(0,0,0,0.2);cursor:default}.gssb_f{visibility:hidden;white-space:nowrap}.gssb_k{border:0;display:block;position:absolute;top:0;z-index:988}.gsdd_a{border:none!important}.gsq_a{padding:0}.gsq_a{padding:0}.gssb_a{padding:0 7px}.gssb_a,.gssb_a td{white-space:nowrap;overflow:hidden;line-height:22px}#gssb_b{font-size:11px;color:#36c;text-decoration:none}#gssb_b:hover{font-size:11px;color:#36c;text-decoration:underline}.gssb_g{text-align:center;padding:8px 0 7px;position:relative}.gssb_h{font-size:15px;height:28px;margin:0.2em;-webkit-appearance:button}.gssb_i{background:#eee}.gss_ifl{visibility:hidden;padding-left:5px}.gssb_i .gss_ifl{visibility:visible}a.gssb_j{font-size:13px;color:#36c;text-decoration:none;line-height:100%}a.gssb_j:hover{text-decoration:underline}.gssb_l{height:1px;background-color:#e5e5e5}.gssb_m{color:#000;background:#fff}.gssb_a{padding:0 9px}.gsib_a{padding:5px 9px 4px 9px}.gscb_a{line-height:27px}.gssb_e{border:0}.gssb_l{margin:5px 0}input.gsc-input::-webkit-input-placeholder{font-size:14px}input.gsc-input:-moz-placeholder{font-size:14px}input.gsc-input::-moz-placeholder{font-size:14px}input.gsc-input:-ms-input-placeholder{font-size:14px}input.gsc-input:focus::-webkit-input-placeholder{color:transparent}input.gsc-input:focus:-moz-placeholder{color:transparent}input.gsc-input:focus::-moz-placeholder{color:transparent}input.gsc-input:focus:-ms-input-placeholder{color:transparent}.gssb_c .gsc-completion-container{position:static}.gssb_c{z-index:5000}.gsc-completion-container table{background:transparent;font-size:inherit;font-family:inherit}.gssb_c > tbody > tr,.gssb_c > tbody > tr > td,.gssb_d,.gssb_d > tbody > tr,.gssb_d > tbody > tr > td,.gssb_e,.gssb_e > tbody > tr,.gssb_e > tbody > tr > td{padding:0;margin:0;border:0}.gssb_a table,.gssb_a table tr,.gssb_a table tr td{padding:0;margin:0;border:0}</style><script charset="utf-8" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/button.93a0c25c2d2f3081c705c98c2d9dec0e.js.download"></script><style type="text/css">.CtxtMenu_InfoClose {  top:.2em; right:.2em;}
+.CtxtMenu_InfoContent {  overflow:auto; text-align:left; font-size:80%;  padding:.4em .6em; border:1px inset; margin:1em 0px;  max-height:20em; max-width:30em; background-color:#EEEEEE;  white-space:normal;}
+.CtxtMenu_Info.CtxtMenu_MousePost {outline:none;}
+.CtxtMenu_Info {  position:fixed; left:50%; width:auto; text-align:center;  border:3px outset; padding:1em 2em; background-color:#DDDDDD;  color:black;  cursor:default; font-family:message-box; font-size:120%;  font-style:normal; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 15px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius:15px;               /* Safari and Chrome */  -moz-border-radius:15px;                  /* Firefox */  -khtml-border-radius:15px;                /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */  filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=2, OffY=2, Color="gray", Positive="true"); /* IE */}
+</style><style type="text/css">.CtxtMenu_MenuClose {  position:absolute;  cursor:pointer;  display:inline-block;  border:2px solid #AAA;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  font-family: "Courier New", Courier;  font-size:24px;  color:#F0F0F0}
+.CtxtMenu_MenuClose span {  display:block; background-color:#AAA; border:1.5px solid;  border-radius:18px;  -webkit-border-radius: 18px;             /* Safari and Chrome */  -moz-border-radius: 18px;                /* Firefox */  -khtml-border-radius: 18px;              /* Konqueror */  line-height:0;  padding:8px 0 6px     /* may need to be browser-specific */}
+.CtxtMenu_MenuClose:hover {  color:white!important;  border:2px solid #CCC!important}
+.CtxtMenu_MenuClose:hover span {  background-color:#CCC!important}
+.CtxtMenu_MenuClose:hover:focus {  outline:none}
+</style><style type="text/css">.CtxtMenu_Menu {  position:absolute;  background-color:white;  color:black;  width:auto; padding:5px 0px;  border:1px solid #CCCCCC; margin:0; cursor:default;  font: menu; text-align:left; text-indent:0; text-transform:none;  line-height:normal; letter-spacing:normal; word-spacing:normal;  word-wrap:normal; white-space:nowrap; float:none; z-index:201;  border-radius: 5px;                     /* Opera 10.5 and IE9 */  -webkit-border-radius: 5px;             /* Safari and Chrome */  -moz-border-radius: 5px;                /* Firefox */  -khtml-border-radius: 5px;              /* Konqueror */  box-shadow:0px 10px 20px #808080;         /* Opera 10.5 and IE9 */  -webkit-box-shadow:0px 10px 20px #808080; /* Safari 3 & Chrome */  -moz-box-shadow:0px 10px 20px #808080;    /* Forefox 3.5 */  -khtml-box-shadow:0px 10px 20px #808080;  /* Konqueror */}
+.CtxtMenu_MenuItem {  padding: 1px 2em;  background:transparent;}
+.CtxtMenu_MenuArrow {  position:absolute; right:.5em; padding-top:.25em; color:#666666;  font-family: null; font-size: .75em}
+.CtxtMenu_MenuActive .CtxtMenu_MenuArrow {color:white}
+.CtxtMenu_MenuArrow.CtxtMenu_RTL {left:.5em; right:auto}
+.CtxtMenu_MenuCheck {  position:absolute; left:.7em;  font-family: null}
+.CtxtMenu_MenuCheck.CtxtMenu_RTL { right:.7em; left:auto }
+.CtxtMenu_MenuRadioCheck {  position:absolute; left: .7em;}
+.CtxtMenu_MenuRadioCheck.CtxtMenu_RTL {  right: .7em; left:auto}
+.CtxtMenu_MenuInputBox {  padding-left: 1em; right:.5em; color:#666666;  font-family: null;}
+.CtxtMenu_MenuInputBox.CtxtMenu_RTL {  left: .1em;}
+.CtxtMenu_MenuComboBox {  left:.1em; padding-bottom:.5em;}
+.CtxtMenu_MenuLabel {  padding: 1px 2em 3px 1.33em;  font-style:italic}
+.CtxtMenu_MenuRule {  border-top: 1px solid #DDDDDD;  margin: 4px 3px;}
+.CtxtMenu_MenuDisabled {  color:GrayText}
+.CtxtMenu_MenuActive {  background-color: #606872;  color: white;}
+.CtxtMenu_MenuDisabled:focus {  background-color: #E8E8E8}
+.CtxtMenu_MenuLabel:focus {  background-color: #E8E8E8}
+.CtxtMenu_ContextMenu:focus {  outline:none}
+.CtxtMenu_ContextMenu .CtxtMenu_MenuItem:focus {  outline:none}
+.CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
+</style><style id="MJX-CHTML-styles">
+mjx-container[jax="CHTML"] {
+  line-height: 0;
+}
+
+mjx-container [space="1"] {
+  margin-left: .111em;
+}
+
+mjx-container [space="2"] {
+  margin-left: .167em;
+}
+
+mjx-container [space="3"] {
+  margin-left: .222em;
+}
+
+mjx-container [space="4"] {
+  margin-left: .278em;
+}
+
+mjx-container [space="5"] {
+  margin-left: .333em;
+}
+
+mjx-container [rspace="1"] {
+  margin-right: .111em;
+}
+
+mjx-container [rspace="2"] {
+  margin-right: .167em;
+}
+
+mjx-container [rspace="3"] {
+  margin-right: .222em;
+}
+
+mjx-container [rspace="4"] {
+  margin-right: .278em;
+}
+
+mjx-container [rspace="5"] {
+  margin-right: .333em;
+}
+
+mjx-container [size="s"] {
+  font-size: 70.7%;
+}
+
+mjx-container [size="ss"] {
+  font-size: 50%;
+}
+
+mjx-container [size="Tn"] {
+  font-size: 60%;
+}
+
+mjx-container [size="sm"] {
+  font-size: 85%;
+}
+
+mjx-container [size="lg"] {
+  font-size: 120%;
+}
+
+mjx-container [size="Lg"] {
+  font-size: 144%;
+}
+
+mjx-container [size="LG"] {
+  font-size: 173%;
+}
+
+mjx-container [size="hg"] {
+  font-size: 207%;
+}
+
+mjx-container [size="HG"] {
+  font-size: 249%;
+}
+
+mjx-container [width="full"] {
+  width: 100%;
+}
+
+mjx-box {
+  display: inline-block;
+}
+
+mjx-block {
+  display: block;
+}
+
+mjx-itable {
+  display: inline-table;
+}
+
+mjx-row {
+  display: table-row;
+}
+
+mjx-row > * {
+  display: table-cell;
+}
+
+mjx-mtext {
+  display: inline-block;
+}
+
+mjx-mstyle {
+  display: inline-block;
+}
+
+mjx-merror {
+  display: inline-block;
+  color: red;
+  background-color: yellow;
+}
+
+mjx-mphantom {
+  visibility: hidden;
+}
+
+mjx-assistive-mml {
+  position: absolute !important;
+  top: 0px;
+  left: 0px;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 1px 0px 0px 0px !important;
+  border: 0px !important;
+  display: block !important;
+  width: auto !important;
+  overflow: hidden !important;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+mjx-assistive-mml[display="block"] {
+  width: 100% !important;
+}
+
+mjx-c::before {
+  display: block;
+  width: 0;
+}
+
+.MJX-TEX {
+  font-family: MJXZERO, MJXTEX;
+}
+
+.TEX-B {
+  font-family: MJXZERO, MJXTEX-B;
+}
+
+.TEX-I {
+  font-family: MJXZERO, MJXTEX-I;
+}
+
+.TEX-MI {
+  font-family: MJXZERO, MJXTEX-MI;
+}
+
+.TEX-BI {
+  font-family: MJXZERO, MJXTEX-BI;
+}
+
+.TEX-S1 {
+  font-family: MJXZERO, MJXTEX-S1;
+}
+
+.TEX-S2 {
+  font-family: MJXZERO, MJXTEX-S2;
+}
+
+.TEX-S3 {
+  font-family: MJXZERO, MJXTEX-S3;
+}
+
+.TEX-S4 {
+  font-family: MJXZERO, MJXTEX-S4;
+}
+
+.TEX-A {
+  font-family: MJXZERO, MJXTEX-A;
+}
+
+.TEX-C {
+  font-family: MJXZERO, MJXTEX-C;
+}
+
+.TEX-CB {
+  font-family: MJXZERO, MJXTEX-CB;
+}
+
+.TEX-FR {
+  font-family: MJXZERO, MJXTEX-FR;
+}
+
+.TEX-FRB {
+  font-family: MJXZERO, MJXTEX-FRB;
+}
+
+.TEX-SS {
+  font-family: MJXZERO, MJXTEX-SS;
+}
+
+.TEX-SSB {
+  font-family: MJXZERO, MJXTEX-SSB;
+}
+
+.TEX-SSI {
+  font-family: MJXZERO, MJXTEX-SSI;
+}
+
+.TEX-SC {
+  font-family: MJXZERO, MJXTEX-SC;
+}
+
+.TEX-T {
+  font-family: MJXZERO, MJXTEX-T;
+}
+
+.TEX-V {
+  font-family: MJXZERO, MJXTEX-V;
+}
+
+.TEX-VB {
+  font-family: MJXZERO, MJXTEX-VB;
+}
+
+mjx-stretchy-v mjx-c, mjx-stretchy-h mjx-c {
+  font-family: MJXZERO, MJXTEX-S1, MJXTEX-S4, MJXTEX, MJXTEX-A ! important;
+}
+
+@font-face /* 0 */ {
+  font-family: MJXZERO;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Zero.woff") format("woff");
+}
+
+@font-face /* 1 */ {
+  font-family: MJXTEX;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Regular.woff") format("woff");
+}
+
+@font-face /* 2 */ {
+  font-family: MJXTEX-B;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Bold.woff") format("woff");
+}
+
+@font-face /* 3 */ {
+  font-family: MJXTEX-I;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-Italic.woff") format("woff");
+}
+
+@font-face /* 4 */ {
+  font-family: MJXTEX-MI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Main-Italic.woff") format("woff");
+}
+
+@font-face /* 5 */ {
+  font-family: MJXTEX-BI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Math-BoldItalic.woff") format("woff");
+}
+
+@font-face /* 6 */ {
+  font-family: MJXTEX-S1;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size1-Regular.woff") format("woff");
+}
+
+@font-face /* 7 */ {
+  font-family: MJXTEX-S2;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size2-Regular.woff") format("woff");
+}
+
+@font-face /* 8 */ {
+  font-family: MJXTEX-S3;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size3-Regular.woff") format("woff");
+}
+
+@font-face /* 9 */ {
+  font-family: MJXTEX-S4;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Size4-Regular.woff") format("woff");
+}
+
+@font-face /* 10 */ {
+  font-family: MJXTEX-A;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_AMS-Regular.woff") format("woff");
+}
+
+@font-face /* 11 */ {
+  font-family: MJXTEX-C;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Regular.woff") format("woff");
+}
+
+@font-face /* 12 */ {
+  font-family: MJXTEX-CB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Calligraphic-Bold.woff") format("woff");
+}
+
+@font-face /* 13 */ {
+  font-family: MJXTEX-FR;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Regular.woff") format("woff");
+}
+
+@font-face /* 14 */ {
+  font-family: MJXTEX-FRB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Fraktur-Bold.woff") format("woff");
+}
+
+@font-face /* 15 */ {
+  font-family: MJXTEX-SS;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Regular.woff") format("woff");
+}
+
+@font-face /* 16 */ {
+  font-family: MJXTEX-SSB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Bold.woff") format("woff");
+}
+
+@font-face /* 17 */ {
+  font-family: MJXTEX-SSI;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_SansSerif-Italic.woff") format("woff");
+}
+
+@font-face /* 18 */ {
+  font-family: MJXTEX-SC;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Script-Regular.woff") format("woff");
+}
+
+@font-face /* 19 */ {
+  font-family: MJXTEX-T;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Typewriter-Regular.woff") format("woff");
+}
+
+@font-face /* 20 */ {
+  font-family: MJXTEX-V;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Regular.woff") format("woff");
+}
+
+@font-face /* 21 */ {
+  font-family: MJXTEX-VB;
+  src: url("https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2/MathJax_Vector-Bold.woff") format("woff");
+}
+</style></head>
+
+<body class="post-template tag-opencv tag-grayscale tag-binary-image tag-threshold tag-convert-color tag-adaptive-threshold nav-closed">
+    <script type="text/javascript" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/social.js.download"></script>
+    <div id="fb-root" class=" fb_reset"><div style="position: absolute; top: -10000px; width: 0px; height: 0px;"><div></div></div></div>
+
+    <div id="header">
+        <div id="blog-banner">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-5">
+            <img src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/vnlab_logo.jpg" alt="VNLab Logo">
+        </div>
+        <div class="col-md-5 text-right coworker">
+            <img src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/vnlab_coworker.jpg" alt="VNLab coworker">
+        </div>
+        <div class="col-md-offset-1"></div>
+    </div>
+</div>
+
+<nav class="navbar navbar-default">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                        <li class="">
+                            <a class="https://vietnamlab.vn" href="https://vietnamlab.vn/">GMO-Z.com Vietnam Lab Center</a>
+                        </li>
+                        <li class="">
+                            <a class="/tag/news/" href="https://blog.vietnamlab.vn/tag/news/">Tin tức</a>
+                        </li>
+                        <li class="">
+                            <a class="/" href="https://blog.vietnamlab.vn/">Blog</a>
+                        </li>
+                        <li class="">
+                            <a class="/tuyen-dung/" href="https://blog.vietnamlab.vn/tuyen-dung/">★ Tuyển dụng 2019 ★</a>
+                        </li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
+                        <li><a class="subscribe-button" href="https://blog.vietnamlab.vn/subscribe/">Đăng ký</a></li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <div class="col-md-offset-1"></div>
+        <!-- /.container-fluid -->
+    </div>
+</nav>
+
+    </div>
+
+    <div id="body" class="row">
+        
+<div class="col-lg-offset-1 col-lg-7">
+        <article class="post tag-opencv tag-grayscale tag-binary-image tag-threshold tag-convert-color tag-adaptive-threshold js-toc-content">
+            <div class="post-header">
+                <h2 class="post-title"><a href="https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/">Xử lý ảnh với OpenCV - Tut 2: Chuyển đổi ảnh màu</a></h2>
+            </div>
+
+            <div class="post-meta">
+                <div class="post-date" datetime="2018-02-27">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i> 27 February 2018
+                </div>
+                <div class="post-tag">
+                    <i class="fa fa-tags" aria-hidden="true"></i> <a href="https://blog.vietnamlab.vn/tag/opencv/">OpenCV</a>, <a href="https://blog.vietnamlab.vn/tag/grayscale/">grayscale</a>, <a href="https://blog.vietnamlab.vn/tag/binary-image/">binary image</a>, <a href="https://blog.vietnamlab.vn/tag/threshold/">threshold</a>, <a href="https://blog.vietnamlab.vn/tag/convert-color/">convert color</a>, <a href="https://blog.vietnamlab.vn/tag/adaptive-threshold/">adaptive threshold</a>
+                </div>
+            </div>
+
+            <div class="post-featured post-featured-single">
+                <div class="post-featured-img">
+                        <img src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/opencv_hor_900_1.png" alt="Xử lý ảnh với OpenCV - Tut 2: Chuyển đổi ảnh màu">
+                </div>
+
+                <div class="post-author">
+                        <a href="https://blog.vietnamlab.vn/author/duonghm/">
+                            <img src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/no_avatar.png" alt="H.M.D"><span>H.M.D</span>
+                        </a>
+                </div>
+
+                <div class="post-share">
+                    <div class="share-button">
+                        <div class="fb-share-button fb_iframe_widget" data-href="/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/" data-layout="button" data-size="large" data-mobile-iframe="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=1243367942363425&amp;container_width=0&amp;href=https%3A%2F%2Fblog.vietnamlab.vn%2F2018%2F02%2F27%2Fxu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau%2F&amp;layout=button&amp;locale=vi_VN&amp;mobile_iframe=true&amp;sdk=joey&amp;size=large"><span style="vertical-align: bottom; width: 87px; height: 28px;"><iframe name="f2d92e5a886404" width="1000px" height="1000px" data-testid="fb:share_button Facebook Social Plugin" title="fb:share_button Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/share_button.html" style="border: none; visibility: visible; width: 87px; height: 28px;" class=""></iframe></span></div>
+                    </div>
+
+                    <div class="share-button">
+                        <iframe id="twitter-widget-0" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" style="position: static; visibility: visible; width: 76px; height: 28px;" title="Twitter Tweet Button" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/tweet_button.6787510241df65d128e2b60207ad4c25.en.html"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <section class="post-content">
+                <h4 id="seriesbivit">Series bài viết</h4>
+<ul>
+<li><a href="https://blog.vietnamlab.vn/2017/12/22/xu-ly-anh-voi-opencv-tut-1-cai-dat-opencv/">Tut 1: Cài đặt OpenCV</a></li>
+<li><a href="https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/">Tut 2: Chuyển đổi ảnh màu</a></li>
+<li><a href="https://blog.vietnamlab.vn/2018/05/30/xu-ly-anh-voi-opencv-tut3/">Tut 3: Phương pháp lọc ảnh</a></li>
+<li><a href="https://blog.vietnamlab.vn/2018/10/09/xu-ly-anh-voi-opencv/">Tut 4: Xác định viền trong ảnh</a></li>
+</ul>
+<h3 id="mctiubivit">Mục tiêu bài viết</h3>
+<p>Bài viết sẽ giúp các bạn có thể thực hiện một số phép xử lý ảnh phổ biến với OpenCV trên C++ bắt đầu bằng việc biến đổi ảnh màu về thành ảnh xám (grayscale image) và ảnh đen trắng (black and white).</p>
+<p><strong>Mỗi một mục được trình bày nhằm giải đáp bốn câu hỏi chính</strong></p>
+<ul>
+<li><strong>What</strong>: Cái gì? Kỹ thuật này cho ra kết quả như thế nào.</li>
+<li><strong>Why</strong>: Tại sao? Kỹ thuật này được ứng dụng trong trường hợp nào.</li>
+<li><strong>How</strong>: Như thế nào? Cách giải quyết trên mặt lý thuyết.</li>
+<li><strong>Implement</strong>: Cách cài đặt.</li>
+</ul>
+<h4 id="1bininhxmgrayscaleconvert">1. Biến đổi ảnh xám (Grayscale convert)</h4>
+<p><strong>What ?</strong><br>
+Đưa vào một ảnh màu, bạn sẽ thu được một ảnh xám.<br>
+<img src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/4KpRfBP.png" alt="img1"></p>
+<p><strong>Why ?</strong><br>
+Trong xử lý ảnh, việc chuyển đổi ảnh màu sang ảnh xám là công việc vô cùng phổ biến.<br>
+Ảnh màu thực chất chỉ là tập hợp của những ma trận số có cùng kích thước (xem lại <a href="https://vietnamlab.vn/blog/2017/12/22/xu-ly-anh-voi-opencv-tut-1-cai-dat-opencv/">phần 1</a>). Khi muốn xử lý thông tin trên ảnh, sẽ dễ dàng hơn nếu ta chỉ xử lý dữ liệu trên một ma trận số thay vì nhiều ma trận số. Việc biến đổi ảnh màu về ảnh số (Grayscale converting) xuất hiện vì mục đích trên - biến đổi thông tin ảnh về một ma trận số hai chiều duy nhất.<br>
+<img src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/W6HQOgS.png" alt="img_2"></p>
+<p><strong>How ?</strong><br>
+Giả sử, hình ảnh của bạn được lưu trữ dưới dạng RGB (Red-Green-Blue). Điều này có nghĩa bạn có ba ma trận xám tương ứng cho màu Red, Green, Blue. Công việc của bạn là tìm cách tổng hợp ba ma trận này về thành một ma trận duy nhất. Một trong số các công thức phổ biến để thực hiện việc đó là<br>
+<strong>Y = 0.2126R + 0.7152G + 0.0722B</strong><br>
+Trong đó:</p>
+<ul>
+<li>Y: ma trận xám cần tìm</li>
+<li>R: ma trận xám đỏ của ảnh</li>
+<li>G: ma trận xám lục của ảnh</li>
+<li>B: ma trận xám lam của ảnh</li>
+</ul>
+<p>Nếu bạn chưa quen về việc thực hiện phép toán trên ma trận, hãy hình dung Y, R, G, B là giá trị mức xám trên các ô có tọa độ giống nhau.</p>
+<p><strong>Implement</strong><br>
+<strong>- Cách 1: Đọc trực tiếp ảnh dưới dạng ảnh xám</strong></p>
+<pre><code class="language-cpp hljs"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;opencv2\opencv.hpp&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> cv;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+	Mat img = imread(<span class="hljs-string">"img_sample.png"</span>, CV_LOAD_IMAGE_GRAYSCALE);
+	imshow(<span class="hljs-string">"Sample"</span>, img);	
+	waitKey(<span class="hljs-number">0</span>);
+	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>Trong đoạn code trên, việc chuyển đổi ảnh sang dạng xám ngay từ lúc đọc ảnh vào bằng cách truyền thêm tham số <code>CV_LOAD_IMAGE_GRAYSCALE</code> trong hàm <code>imread</code>. Tham số <code>CV_LOAD_IMAGE_GRAYSCALE</code> thực chất là số <code>0</code> nên bạn có thực hiện lệnh <code>imread("img_sample.png", 0)</code> với chức năng tương tự.<br>
+Nếu muốn giữ nguyên việc đọc ảnh đầu vào là ảnh màu, bạn có thể sử dụng một trong các lệnh sau<br>
+<code>imread("img_sample.png")</code><br>
+<code>imread("img_sample.png",1)</code><br>
+<code>imread("img_sample.png",CV_LOAD_IMAGE_COLOR)</code><br>
+với chức năng tương tự</p>
+<p><strong>- Cách 2: Sử dụng lệnh cvtColor</strong></p>
+<pre><code class="language-cpp hljs"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;opencv2\opencv.hpp&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> cv;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+	Mat img = imread(<span class="hljs-string">"img_sample.png"</span>, CV_LOAD_IMAGE_COLOR);
+	Mat grayscale_img;
+	cvtColor(img, grayscale_img, CV_BGR2GRAY);
+	imshow(<span class="hljs-string">"Sample"</span>, grayscale_img);
+	waitKey(<span class="hljs-number">0</span>);
+	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>Lệnh <code>cvtColor(source, dest, mode)</code> cho phép bạn chuyển đổi ảnh màu <code>source</code> sang ảnh xám và lưu vào <code>dest</code> với độ chuyển đổi màu là <code>mode</code>. <code>CV_BGR2GRAY</code> là chế độ cho phép chuyển từ ảnh màu lưu ở format BGR sang ảnh xám.</p>
+<h4 id="2bininhentrngblackandwhiteconvert">2. Biến đổi ảnh đen trắng (Black-and-white convert)</h4>
+<p><strong>What ?</strong><br>
+Từ ảnh xám, bạn có thể biến đổi về thành ảnh chỉ có hai màu đen-trắng (black-and-white)<br>
+<img src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/FlZlGsM.png" alt="img_3"></p>
+<p><strong>Why ?</strong><br>
+Ảnh đen trắng thường được ứng dụng trong bài toán phân vùng ảnh (Image segmentation). Giả sử trong hình ví dụ trên, bằng cách biến đổi ảnh về nhị phân, bạn có thể loại bỏ các thông khung cảnh xung quanh và chỉ giữ lại hai con cá heo trên hình.</p>
+<p><strong>How ?</strong><br>
+Ảnh đen trắng, như tên gọi, chỉ có hai màu đen với giá trị là <code>0</code> và trắng với giá trị <code>255</code>. Bài toán đặt ra là làm thế nào để biến đổi ảnh xám (hay nói cách khác là một ma trận 2 chiều với giá trị mỗi ô trong khoảng 0-255) về thành một ma trận 2 chiều với giá trị mỗi ô là 0 hoặc 255.<br>
+Cách giải quyết là chọn một ngưỡng (threshold) để xác định đâu là điểm ảnh đen và đâu là điểm ảnh trắng. Nếu giá trị trên ảnh xám lớn hơn ngưỡng threshold, đấy là điểm ảnh trắng và ngược lại.<br>
+<strong>Gọi ảnh xám là Gray, ảnh đen trắng cần xác định là BW, tọa độ các pixel trên hình là (x,y), ta có</strong><br>
+<strong>- BW(x,y) = 255 nếu Gray(x,y) &gt; threshold</strong><br>
+<strong>- BW(x,y) = 0 nếu Gray(x,y) &lt;= threshold</strong></p>
+<p><strong>Implement</strong><br>
+<strong>Sử dụng hàm <code>threshold</code></strong></p>
+<pre><code class="language-cpp hljs"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;opencv2\opencv.hpp&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> cv;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+	Mat img = imread(<span class="hljs-string">"img_sample.png"</span>, CV_LOAD_IMAGE_GRAYSCALE);	
+	Mat bw;
+	threshold(img, bw, <span class="hljs-number">150</span>, <span class="hljs-number">255</span>, <span class="hljs-number">0</span>);
+	imshow(<span class="hljs-string">"Sample"</span>, bw);
+	waitKey(<span class="hljs-number">0</span>);
+	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>Lệnh <code>threshold(src, img, thres, max_value, type)</code> dùng để biến đổi ảnh xám <code>src</code> về thành ảnh đen trắng và lưu vào <code>dst</code>. Ngưỡng để xác định đen và trắng được truyền qua tham số <code>thres</code>. Ngoài ra, bạn có thể định nghĩa lại màu sáng nhất thông qua <code>max_value</code> (ngưỡng trắng). Hàm <code>threshold</code> hộ trợ một số loại biến đổi như sau:<br>
+-<code>type = 0</code> <strong>Threshold Binary</strong> Biến đổi đen trắng giống định nghĩa phía trên<br>
+-<code>type = 1</code> <strong>Threshold Binary, Inverted</strong> Biến đổi đen trắng ngược với định nghĩa trên<br>
+-<code>type = 2</code> <strong>Truncate</strong> Nếu giá trị điểm ảnh lớn hơn <code>thres</code>, giá trị sẽ được đặt lại bằng <code>thres</code> (chặn mức sáng nhất)<br>
+-<code>type = 3</code> <strong>Threshold to Zero</strong> Nếu giá trị điểm ảnh nhỏ hơn <code>thres</code>, điểm ảnh đó sẽ trở thành màu đen<br>
+-<code>type = 4</code> <strong>Threshold to Zero, Inverted</strong> Ngược lại với <code>type = 3</code></p>
+<p><img src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/nFc7MKO.png" alt="Imgur"></p>
+<p>Tùy vào ngưỡng threshold, chúng ta sẽ có kết quả hình khác nhau<br>
+<img src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/RtdQb6M.png" alt="Imgur"></p>
+<p><strong>Sử dụng hàm <code>adaptiveThreshold</code></strong><br>
+Như ở ví dụ trên, chúng ta có thể thấy kết quả phụ thuộc rất nhiều vào ngưỡng threshold. Trong thực tế, đối với các chương trình xử lý ảnh real-time, việc sử dụng một threshold cố định là điều không khả thi do cường độ sáng thay đổi liên tục. Để khắc phục tình trạng này, chúng ta có thể sử dụng hàm <code>adaptiveThreshold</code> do OpenCV hỗ trợ.</p>
+<pre><code class="language-cpp hljs"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span><span class="hljs-meta-string">&lt;opencv2\opencv.hpp&gt;</span></span>
+
+<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> cv;
+
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>{
+	Mat img = imread(<span class="hljs-string">"img_sample.png"</span>, CV_LOAD_IMAGE_GRAYSCALE);	
+	Mat bw;	
+	adaptiveThreshold(img, bw, <span class="hljs-number">255</span>, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>);
+	imshow(<span class="hljs-string">"sample"</span>, bw);
+	waitKey(<span class="hljs-number">0</span>);
+	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+}
+</code></pre>
+<p>Hàm <code>adaptiveThreshold(src, dst, maxValue, adaptiveMethod, thresholdType, blockSize, C)</code> giúp biến đổi ảnh xám <code>src</code> về ảnh đen trắng <code>dst</code> với ngưỡng sáng tối đa <code>maxValue</code>. <code>adaptiveThreshold</code> hỗ trợ 2 phương pháp tự động chọn ngưỡng threshold là <code>ADAPTIVE_THRESH_MEAN_C</code> và <code>ADAPTIVE_THRESH_GAUSSIAN_C</code>; cùng với 2 chế độ <code>thresholdType</code> là <code>THRESH_BINARY</code> và <code>THRESH_BINARY_INV</code>. Các tham số <code>blockSize</code> và <code>C</code> dùng để chọn số lượng điểm lân cận để tính ngưỡng threshold tốt nhất.<br>
+<img src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/lyRa2Cw.jpg" alt="Imgur"></p>
+<h3 id="tngkt">Tổng kết</h3>
+<p>Bài viết vừa đề cập đến hai kĩ thuật chuyển đổi ảnh cực kỳ phổ biến trong xử lý ảnh là biến đổi ảnh xám (Grayscale convert) và biến đổi ảnh nhị phân (Black-and-white convert). Hi vọng các bạn đã hiểu rõ về các phương pháp mình vừa trình bày trên.<br>
+Hẹn gặp lại các bạn trong bài kế tiếp - các phương pháp lọc ảnh.</p>
+<p>HMD.</p>
+
+            </section>
+
+            <div class="post-footer">
+                <div class="share-button">
+                    <div class="fb-share-button fb_iframe_widget" data-href="/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/" data-layout="button_count" data-size="large" data-mobile-iframe="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=1243367942363425&amp;container_width=0&amp;href=https%3A%2F%2Fblog.vietnamlab.vn%2F2018%2F02%2F27%2Fxu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau%2F&amp;layout=button_count&amp;locale=vi_VN&amp;mobile_iframe=true&amp;sdk=joey&amp;size=large"><span style="vertical-align: bottom; width: 98px; height: 28px;"><iframe name="f2a0eeb1f1e0d38" width="1000px" height="1000px" data-testid="fb:share_button Facebook Social Plugin" title="fb:share_button Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/share_button(1).html" style="border: none; visibility: visible; width: 98px; height: 28px;" class=""></iframe></span></div>
+                </div>
+
+                <div class="share-button">
+                    <iframe id="twitter-widget-1" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" style="position: static; visibility: visible; width: 76px; height: 28px;" title="Twitter Tweet Button" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/tweet_button.6787510241df65d128e2b60207ad4c25.en(1).html"></iframe>
+                </div>
+
+                <div class="share-button">
+                    <div id="___plusone_0" style="position: absolute; width: 450px; left: -10000px;"><iframe ng-non-bindable="" frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" style="position:absolute;top:-10000px;width:450px;margin:0px;border-style:none" tabindex="0" vspace="0" width="100%" id="I0_1587261927783" name="I0_1587261927783" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/fastbutton.html" data-gapiattached="true"></iframe></div><div class="g-plusone" data-href="/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/" data-gapiscan="true" data-onload="true" data-gapistub="true"></div>
+                </div>
+            </div>
+
+        </article>
+
+        <div class="post-related">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="related-box">
+                        <img src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/1_ES7PUAbTX-rqAylU_zkqJA.jpeg" alt="">
+                        <a href="https://blog.vietnamlab.vn/2019/03/22/face-clustering-voi-dbscan-va/" class="text-justify">Face clustering với DBSCAN và Chinese Whispers</a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="related-box">
+                        <img src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/opencv_hor_900_1(1).png" alt="">
+                        <a href="https://blog.vietnamlab.vn/2019/03/22/xu-ly-anh-voi-opencv-tut5-can-bang-histogram/" class="text-justify">Xử lý ảnh với OpenCV - Tut5: Histogram Equalization</a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="related-box">
+                        <img src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/1_v6GjxoF2iz7D5QLIsg402A.png" alt="">
+                        <a href="https://blog.vietnamlab.vn/2019/01/04/su-dung-opencv-voi-swift-trong-ios/" class="text-justify">Sử dụng OpenCV với Swift trong iOS</a>
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" class="input-id" value="5ad30b8f8371980001458556">
+            <input type="hidden" class="input-tag" value="opencv">
+            <input type="hidden" class="input-tag" value="grayscale">
+            <input type="hidden" class="input-tag" value="binary-image">
+            <input type="hidden" class="input-tag" value="threshold">
+            <input type="hidden" class="input-tag" value="convert-color">
+            <input type="hidden" class="input-tag" value="adaptive-threshold">
+
+            <script type="text/javascript" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/related.js.download"></script>
+        </div>
+
+        <div class="post-comments">
+            <div class="fb-comments fb_iframe_widget fb_iframe_widget_fluid_desktop" data-href="https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/" data-numposts="10" data-order-by="reverse_time" data-width="100%" fb-xfbml-state="rendered" fb-iframe-plugin-query="app_id=1243367942363425&amp;container_width=844&amp;height=100&amp;href=https%3A%2F%2Fblog.vietnamlab.vn%2F2018%2F02%2F27%2Fxu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau%2F&amp;locale=vi_VN&amp;numposts=10&amp;order_by=reverse_time&amp;sdk=joey&amp;version=v3.1" style="width: 100%;"><span style="vertical-align: bottom; width: 100%; height: 179px;"><iframe name="f2d400360ef4884" width="1000px" height="100px" data-testid="fb:comments Facebook Social Plugin" title="fb:comments Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/comments.html" style="border: none; visibility: visible; width: 100%; height: 179px;" class=""></iframe></span></div>
+        </div>
+</div>
+<div class="col-lg-3">
+    <div id="sidebar">
+
+    <div id="___gcse_0"><div class="gsc-control-cse gsc-control-cse-vi"><div class="gsc-control-wrapper-cse" dir="ltr"><form class="gsc-search-box gsc-search-box-tools" accept-charset="utf-8"><table cellspacing="0" cellpadding="0" class="gsc-search-box"><tbody><tr><td class="gsc-input"><div class="gsc-input-box" id="gsc-iw-id1"><table cellspacing="0" cellpadding="0" id="gs_id50" class="gstl_50 gsc-input" style="width: 100%; padding: 0px;"><tbody><tr><td id="gs_tti50" class="gsib_a"><input autocomplete="off" type="text" size="10" class="gsc-input" name="search" title="tìm kiếm" id="gsc-i-id1" placeholder="Tìm kiếm tùy chỉnh" style="width: 100%; padding: 0px; border: none; margin: 0px; height: auto; background: url(&quot;https://www.google.com/cse/static/images/1x/googlelogo_lightgrey_46x16dp.png&quot;) left center no-repeat rgb(255, 255, 255); text-indent: 48px; outline: none;" dir="ltr" spellcheck="false" x-webkit-grammar="builtin:search" lang="vi"></td><td class="gsib_b"><div class="gsst_b" id="gs_st50" dir="ltr"><a class="gsst_a" href="javascript:void(0)" style="display: none;" title="Xóa nội dung trong hộp tìm kiếm" role="button"><span class="gscb_a" id="gs_cb50" aria-hidden="true">×</span></a></div></td></tr></tbody></table></div></td><td class="gsc-search-button"><button class="gsc-search-button gsc-search-button-v2"><svg width="13" height="13" viewBox="0 0 13 13"><title>tìm kiếm</title><path d="m4.8495 7.8226c0.82666 0 1.5262-0.29146 2.0985-0.87438 0.57232-0.58292 0.86378-1.2877 0.87438-2.1144 0.010599-0.82666-0.28086-1.5262-0.87438-2.0985-0.59352-0.57232-1.293-0.86378-2.0985-0.87438-0.8055-0.010599-1.5103 0.28086-2.1144 0.87438-0.60414 0.59352-0.8956 1.293-0.87438 2.0985 0.021197 0.8055 0.31266 1.5103 0.87438 2.1144 0.56172 0.60414 1.2665 0.8956 2.1144 0.87438zm4.4695 0.2115 3.681 3.6819-1.259 1.284-3.6817-3.7 0.0019784-0.69479-0.090043-0.098846c-0.87973 0.76087-1.92 1.1413-3.1207 1.1413-1.3553 0-2.5025-0.46363-3.4417-1.3909s-1.4088-2.0686-1.4088-3.4239c0-1.3553 0.4696-2.4966 1.4088-3.4239 0.9392-0.92727 2.0864-1.3969 3.4417-1.4088 1.3553-0.011889 2.4906 0.45771 3.406 1.4088 0.9154 0.95107 1.379 2.0924 1.3909 3.4239 0 1.2126-0.38043 2.2588-1.1413 3.1385l0.098834 0.090049z"></path></svg></button></td><td class="gsc-clear-button"><div class="gsc-clear-button" title="xóa các kết quả">&nbsp;</div></td></tr></tbody></table></form><div class="gsc-results-wrapper-overlay"><div class="gsc-results-close-btn" tabindex="0"></div><div class="gsc-positioningWrapper"><div class="gsc-tabsAreaInvisible"><div aria-label="refinement" role="tab" class="gsc-tabHeader gsc-inline-block gsc-tabhActive">Tìm kiếm tùy chỉnh</div><span class="gs-spacer"> </span></div></div><div class="gsc-positioningWrapper"><div class="gsc-tabsAreaInvisible"></div></div><div class="gsc-above-wrapper-area-invisible"><table cellspacing="0" cellpadding="0" class="gsc-above-wrapper-area-container"><tbody><tr><td class="gsc-result-info-container"><div class="gsc-result-info-invisible"></div></td><td class="gsc-orderby-container"><div class="gsc-orderby-invisible"><div class="gsc-orderby-label gsc-inline-block">Sắp xếp theo:</div><div class="gsc-option-menu-container gsc-inline-block"><div class="gsc-selected-option-container gsc-inline-block"><div class="gsc-selected-option">Relevance</div><div class="gsc-option-selector"></div></div><div class="gsc-option-menu-invisible"><div class="gsc-option-menu-item gsc-option-menu-item-highlighted"><div class="gsc-option">Relevance</div></div><div class="gsc-option-menu-item"><div class="gsc-option">Date</div></div></div></div></div></td></tr></tbody></table></div><div class="gsc-adBlockInvisible"></div><div class="gsc-wrapper"><div class="gsc-adBlockInvisible"></div><div class="gsc-resultsbox-invisible"><div class="gsc-resultsRoot gsc-tabData gsc-tabdActive"><div><div class="gsc-expansionArea"></div></div></div></div></div></div><div class="gsc-modal-background-image" tabindex="0"></div></div></div></div><div onmousedown="createReqIdCookie(&quot;3f9786e881e211eaa31b0206965f7226&quot;)"><style type="text/css">    body {        font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;        font-size: 14px;        line-height: 1.42857143;        color: #333;        background-color: #fff;    }    div {        display: block;    }    img {        vertical-align: middle;    }    img {        border: 0;    }    .sidebar-box {        margin-bottom: 25px;    }    .sidebar-title {        font-size: 1.7em;        font-weight: bold;        margin: 0 0 20px 0;        padding-bottom: 5px;        /* font-family: 'Open Sans'; */        border-bottom: 2px solid #ccc;    }    .media:first-child {        margin-top: 0;    }    .media, .media-body {        overflow: hidden;        zoom: 1;    }    .media {        margin-top: 15px;    }    .media-body, .media-left, .media-right {        display: table-cell;        vertical-align: top;    }    .media-left, .media>.pull-left {        padding-right: 10px;    }    .media-body {        width: 10000px;    }    .media, .media-body {        overflow: hidden;        zoom: 1;    }    a {        background-color: transparent;        color: #337ab7;        text-decoration: none;    }    .media-body .title {        overflow: hidden;        text-overflow: ellipsis;        display: -webkit-box;        line-height: 16px;        max-height: 32px;        -webkit-line-clamp: 2;        -webkit-box-orient: vertical;    }    .media-body span {        padding-top: 3px;        font-size: 0.9em;        color: #999;        display: block;    }    .author {        color : #337ab7;        font-weight: bold;    }</style><div class="sidebar-box">    <div class="sidebar-title h2">Recommended for you</div>    <div class="sidebar-content">                <div class="author">Recommended by REM</div>    </div></div></div>
+
+    <div class="sidebar-box">
+        <div class="sidebar-title h2">Theo dõi</div>
+        <div class="sidebar-content">
+            <form method="post" action="https://script.google.com/macros/s/AKfycbyk50TnhD2w5CzaQMoP3-BjEJ2oHPSP9sAuEkIp30BYLm99nEVI/exec" class="">
+    <input class="confirm" type="hidden" name="confirm"><input class="location" type="hidden" name="location" value="https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/"><input class="referrer" type="hidden" name="referrer" value="https://www.google.com/">
+
+    <div class="form-group">
+        <input class="form-control" type="email" name="email" placeholder="Nhập vào email của bạn">
+    </div>
+    <button class="btn btn-primary btn-block" type="submit">Đăng ký nhận tin mới</button>
+    
+<script>
+    (function(g,h,o,s,t){
+        var buster = function(b,m) {
+            h[o]('input.'+b).forEach(function (i) {
+                i.value=i.value || m;
+            });
+        };
+        buster('location', g.location.href);
+        buster('referrer', h.referrer);
+    })(window,document,'querySelectorAll','value');
+</script>
+
+</form>
+
+
+        </div>
+    </div>
+
+    <div class="sidebar-box">
+        <div class="sidebar-title h2">Tuyển dụng</div>
+        <div class="sidebar-content">
+          <a class="title" href="https://blog.vietnamlab.vn/tuyen-dung">
+            <img style="max-width: 100%" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/TUYỂN DỤNG 2019.jpg" alt="Tuyển dụng">
+          </a>
+        </div>
+    </div>
+
+    <div class="sidebar-box">
+        <div class="sidebar-title h2">Facebook</div>
+        <div class="sidebar-content">
+            <div class="fb-page fb_iframe_widget" data-href="https://www.facebook.com/vietnamlab.vn" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-width="500" data-show-facepile="true" fb-xfbml-state="rendered" fb-iframe-plugin-query="adapt_container_width=true&amp;app_id=1243367942363425&amp;container_width=327&amp;hide_cover=false&amp;href=https%3A%2F%2Fwww.facebook.com%2Fvietnamlab.vn&amp;locale=vi_VN&amp;sdk=joey&amp;show_facepile=true&amp;small_header=false&amp;width=500"><span style="vertical-align: bottom; width: 327px; height: 196px;"><iframe name="f6e274bd36fc64" width="500px" height="1000px" data-testid="fb:page Facebook Social Plugin" title="fb:page Facebook Social Plugin" frameborder="0" allowtransparency="true" allowfullscreen="true" scrolling="no" allow="encrypted-media" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/page.html" style="border: none; visibility: visible; width: 327px; height: 196px;" class=""></iframe></span></div>
+        </div>
+    </div>
+
+    <div class="sidebar-box">
+        <div class="sidebar-title h2">Mục lục</div>
+        <div class="sidebar-content js-toc"><ul class="toc-list "><li class="toc-list-item"><a data-scroll="" href="https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/#seriesbivit" class="toc-link node-name--H4 ">Series bài viết</a></li><li class="toc-list-item"><a data-scroll="" href="https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/#mctiubivit" class="toc-link node-name--H3 ">Mục tiêu bài viết</a><ul class="toc-list  is-collapsible"><li class="toc-list-item"><a data-scroll="" href="https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/#1bininhxmgrayscaleconvert" class="toc-link node-name--H4 ">1. Biến đổi ảnh xám (Grayscale convert)</a></li><li class="toc-list-item"><a data-scroll="" href="https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/#2bininhentrngblackandwhiteconvert" class="toc-link node-name--H4  is-active-link">2. Biến đổi ảnh đen trắng (Black-and-white convert)</a></li></ul></li><li class="toc-list-item"><a data-scroll="" href="https://blog.vietnamlab.vn/2018/02/27/xu-ly-anh-voi-opencv-tut-2-chuyen-doi-anh-mau/#tngkt" class="toc-link node-name--H3 ">Tổng kết</a></li></ul></div>
+    </div>
+
+    <div class="sidebar-box">
+        <div class="sidebar-title h2">Tin tức</div>
+        <div class="sidebar-content">
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="https://blog.vietnamlab.vn/2020/01/22/tung-bung-tat-nien-vnlab-2019/">
+                                    <img style="object-fit: cover" class="media-object" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/701bbe5e3e5dc6039f4c.jpg" width="50" height="50" alt="Tưng bừng tất niên 2019 CÔNG TY TNHH GMO-Z.COM VIỆT NAM LAB CENTER .">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <a class="title" href="https://blog.vietnamlab.vn/2020/01/22/tung-bung-tat-nien-vnlab-2019/">Tưng bừng tất niên 2019 CÔNG TY TNHH GMO-Z.COM VIỆT NAM LAB CENTER .</a>
+                            <span><a href="https://blog.vietnamlab.vn/author/vanvh/">V.H.V</a>, 22 January 2020</span>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="https://blog.vietnamlab.vn/2019/12/27/global-internship/">
+                                    <img style="object-fit: cover" class="media-object" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/IMG_6797.jpg" width="50" height="50" alt="Global internship 2019">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <a class="title" href="https://blog.vietnamlab.vn/2019/12/27/global-internship/">Global internship 2019</a>
+                            <span><a href="https://blog.vietnamlab.vn/author/nattl/">T.T.L.N</a>, 27 December 2019</span>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="https://blog.vietnamlab.vn/2019/12/24/lkjsaioopa/">
+                                    <img style="object-fit: cover" class="media-object" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/anh 2.jpg" width="50" height="50" alt="Báo cáo nghiên cứu Quý 4 năm 2019.">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <a class="title" href="https://blog.vietnamlab.vn/2019/12/24/lkjsaioopa/">Báo cáo nghiên cứu Quý 4 năm 2019.</a>
+                            <span><a href="https://blog.vietnamlab.vn/author/vanvh/">V.H.V</a>, 24 December 2019</span>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="https://blog.vietnamlab.vn/2019/12/20/hieu-ve-load-average-trong-linux/">
+                                    <img style="object-fit: cover" class="media-object" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/featured_default.png" width="50" height="50" alt="Hiểu về Load Average trong Linux">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <a class="title" href="https://blog.vietnamlab.vn/2019/12/20/hieu-ve-load-average-trong-linux/">Hiểu về Load Average trong Linux</a>
+                            <span><a href="https://blog.vietnamlab.vn/author/hoantp/">T.P.H</a>, 20 December 2019</span>
+                        </div>
+                    </div>
+                    <div class="media">
+                        <div class="media-left">
+                            <a href="https://blog.vietnamlab.vn/2019/09/26/nhung-dieu-can-biet-truoc-khi-ung-tuyern-vao-gmo-z-com-viet-nam-lab-center/">
+                                    <img style="object-fit: cover" class="media-object" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/01.jpg" width="50" height="50" alt="Những điều cần biết trước khi ứng tuyển vào GMO-Z.com Vietnam Lab Center">
+                            </a>
+                        </div>
+                        <div class="media-body">
+                            <a class="title" href="https://blog.vietnamlab.vn/2019/09/26/nhung-dieu-can-biet-truoc-khi-ung-tuyern-vao-gmo-z-com-viet-nam-lab-center/">Những điều cần biết trước khi ứng tuyển vào GMO-Z.com Vietnam Lab Center</a>
+                            <span><a href="https://blog.vietnamlab.vn/author/nattl/">T.T.L.N</a>, 26 September 2019</span>
+                        </div>
+                    </div>
+        </div>
+    </div>
+
+    <div class="sidebar-box">
+        <div class="sidebar-title h2">Từ khoá</div>
+        <div class="sidebar-content">
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/agile/" title="agile" class="tag tag-5ad30b8d837198000145834b agile">agile</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/android/" title="android" class="tag tag-5ad30b8d837198000145834c android">android</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/anguar-cli/" title="anguar cli" class="tag tag-5ad30b8d837198000145834d anguar-cli">anguar cli</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/angular2/" title="angular2" class="tag tag-5ad30b8d837198000145834e angular2">angular2</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/apache/" title="apache" class="tag tag-5ad30b8d837198000145834f apache">apache</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/apache-hive/" title="Apache Hive" class="tag tag-5ad30b8d8371980001458351 apache-hive">Apache Hive</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/apache-knox/" title="Apache Knox" class="tag tag-5ad30b8d8371980001458352 apache-knox">Apache Knox</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/apache-knox-gateway/" title="Apache Knox Gateway" class="tag tag-5ad30b8d8371980001458353 apache-knox-gateway">Apache Knox Gateway</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/asynchronous/" title="asynchronous" class="tag tag-5ad30b8d8371980001458355 asynchronous">asynchronous</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/awk/" title="awk" class="tag tag-5ad30b8d8371980001458356 awk">awk</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/bloom/" title="bloom" class="tag tag-5ad30b8d8371980001458357 bloom">bloom</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/bot/" title="bot" class="tag tag-5ad30b8d8371980001458358 bot">bot</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/build-automation/" title="Build Automation" class="tag tag-5ad30b8d8371980001458359 build-automation">Build Automation</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/cli/" title="cli" class="tag tag-5ad30b8d837198000145835a cli">cli</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/cong-phuong/" title="công phượng" class="tag tag-5ad30b8d837198000145835b cong-phuong">công phượng</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/csv/" title="csv" class="tag tag-5ad30b8d837198000145835c csv">csv</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/data-structure/" title="data structure" class="tag tag-5ad30b8d837198000145835d data-structure">data structure</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/duplicate-code/" title="duplicate code" class="tag tag-5ad30b8d837198000145835e duplicate-code">duplicate code</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/eclipse/" title="eclipse" class="tag tag-5ad30b8d837198000145835f eclipse">eclipse</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/fp-growth/" title="FP-growth" class="tag tag-5ad30b8d8371980001458360 fp-growth">FP-growth</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/frequent-pattern-mining/" title="Frequent Pattern Mining" class="tag tag-5ad30b8d8371980001458361 frequent-pattern-mining">Frequent Pattern Mining</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/future/" title="future" class="tag tag-5ad30b8d8371980001458362 future">future</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/git/" title="git" class="tag tag-5ad30b8d8371980001458363 git">git</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/gradle/" title="Gradle" class="tag tag-5ad30b8d8371980001458364 gradle">Gradle</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/graph-sql/" title="graph sql" class="tag tag-5ad30b8d8371980001458365 graph-sql">graph sql</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/hash/" title="hash" class="tag tag-5ad30b8d8371980001458366 hash">hash</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/hive-server2/" title="Hive Server2" class="tag tag-5ad30b8d837198000145836a hive-server2">Hive Server2</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/ios/" title="ios" class="tag tag-5ad30b8d837198000145836d ios">ios</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/java/" title="java" class="tag tag-5ad30b8d837198000145836e java">java</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/jdbc/" title="JDBC" class="tag tag-5ad30b8d837198000145836f jdbc">JDBC</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/jdt/" title="jdt" class="tag tag-5ad30b8d8371980001458370 jdt">jdt</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/kanban/" title="kanban" class="tag tag-5ad30b8d8371980001458371 kanban">kanban</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/kotlin/" title="kotlin" class="tag tag-5ad30b8d8371980001458372 kotlin">kotlin</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/kuromoji/" title="kuromoji" class="tag tag-5ad30b8d8371980001458373 kuromoji">kuromoji</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/laravel/" title="laravel" class="tag tag-5ad30b8d8371980001458374 laravel">laravel</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/load-balancer/" title="load balancer" class="tag tag-5ad30b8d8371980001458375 load-balancer">load balancer</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/load-balancing/" title="load balancing" class="tag tag-5ad30b8d8371980001458376 load-balancing">load balancing</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/machine-learning/" title="machine learning" class="tag tag-5ad30b8d8371980001458377 machine-learning">machine learning</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/mllib/" title="MLLib" class="tag tag-5ad30b8d8371980001458378 mllib">MLLib</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/monitoring/" title="monitoring" class="tag tag-5ad30b8d8371980001458379 monitoring">monitoring</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/nagios/" title="nagios" class="tag tag-5ad30b8d837198000145837a nagios">nagios</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/neo4j/" title="Neo4j" class="tag tag-5ad30b8d837198000145837b neo4j">Neo4j</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/nginx/" title="nginx" class="tag tag-5ad30b8d837198000145837c nginx">nginx</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/nrpe/" title="nrpe" class="tag tag-5ad30b8d837198000145837d nrpe">nrpe</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/openam/" title="OpenAM" class="tag tag-5ad30b8d837198000145837f openam">OpenAM</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/performance/" title="Performance" class="tag tag-5ad30b8d8371980001458381 performance">Performance</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/personal-kanban/" title="Personal Kanban" class="tag tag-5ad30b8d8371980001458382 personal-kanban">Personal Kanban</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/php/" title="php" class="tag tag-5ad30b8d8371980001458383 php">php</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/programming/" title="programming" class="tag tag-5ad30b8d8371980001458384 programming">programming</a>
+                    </span>
+                    <span class="label label-default text-justify tag">
+                        <a href="https://blog.vietnamlab.vn/tag/react/" title="react" class="tag tag-5ad30b8d8371980001458385 react">react</a>
+                    </span>
+        </div>
+    </div>
+</div>
+</div>
+<div class="col-lg-offset-1"></div>
+
+<script src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/rem.js.download"></script>
+
+    </div>
+
+    <div id="footer">
+        <div class="row">
+            <div class="col-lg-offset-1 col-lg-10 copyright">
+                <a href="https://blog.vietnamlab.vn/">VNLAB Blog</a> © 2020
+            </div>
+            <div class="col-lg-offset-1"></div>
+        </div>
+    </div>
+
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-59342535-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['\\(', '\\)']]
+  },
+  svg: {
+    fontCache: 'global'
+  }
+};
+</script>
+<script src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/polyfill.min.js.download"></script>
+<script id="MathJax-script" async="" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/tex-mml-chtml.js.download"></script>
+
+    <!-- Libraries -->
+    <script type="text/javascript" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/jquery.fitvids.min.js.download"></script>
+    <script type="text/javascript" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/tocbot.min.js.download"></script>
+    <script type="text/javascript" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/bootstrap.min.js.download"></script>
+    <script type="text/javascript" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/highlight.pack.js.download"></script>
+
+    <!-- Custom JS -->
+    <script type="text/javascript" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/index.js.download"></script>
+
+    <!-- App Services -->
+    <script type="text/javascript" charset="UTF-8" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/script.js.download" async=""></script>
+    <script src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/platform.js.download" async="" defer="" gapi_processed="true">{ lang: 'vi' }</script>
+
+
+
+<iframe scrolling="no" frameborder="0" allowtransparency="true" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/widget_iframe.6787510241df65d128e2b60207ad4c25.html" title="Twitter settings iframe" style="display: none;"></iframe><table cellspacing="0" cellpadding="0" class="gstl_50 gssb_c" style="width: 236px; display: none; top: 289px; left: 1047px; position: absolute;"><tbody><tr><td class="gssb_f"></td><td class="gssb_e" style="width: 100%;"></td></tr></tbody></table><iframe name="oauth2relay274693899" id="oauth2relay274693899" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/postmessageRelay.html" tabindex="-1" aria-hidden="true" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe><iframe id="rufous-sandbox" scrolling="no" frameborder="0" allowtransparency="true" allowfullscreen="true" style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: none;" title="Twitter analytics iframe" src="./OpenCV - Grayscale, Binary Image, Adaptive Threshold _ GMO-Z.com Vietnam Lab Center_files/saved_resource.html"></iframe></body></html>

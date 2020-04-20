@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<!-- saved from url=(0091)https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383 -->
+<html><style id="theme-nbgajjpk"></style><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript" async="" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/analytics.js.download"></script><script async="" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/js"></script>
+<script>
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments)};
+				gtag("js", new Date());
+				gtag("config", "UA-52045105-1");
+				</script><!--<base href="https://www.stdio.vn">--><base href=".">
+<title>Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) | Bài viết | STDIO</title>
+<link rel="icon" type="image/ico" href="https://www.stdio.vn/makeup/shared/favicon.ico"><meta name="description" content="Nẳm trong loạt bài viết trong chương trình Tự Học OpenCV Qua Các Ví Dụ Thực Tế. Bài viết sẽ giới thiệu và chi tiết các thuật toán Grayscale, ảnh nhị phân và một số thuật toán giúp biến đổi một ảnh xám thành ảnh nhị phân (Adaptive threshold).">
+<meta name="google-site-verification" content="X2UPPTs9ZPtdwO7zU96ACDvA3NuoFxO1INxk5ZjHc2I">
+<meta property="og:title" content="Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) | Bài viết | STDIO">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://www.stdio.vn/makeup/shared/img_logo_fb_default.png">
+<meta property="og:url" content="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383">
+<meta property="og:site_name" content="STDIO">
+<meta property="og:description" content="Nẳm trong loạt bài viết trong chương trình Tự Học OpenCV Qua Các Ví Dụ Thực Tế. Bài viết sẽ giới thiệu và chi tiết các thuật toán Grayscale, ảnh nhị phân và một số thuật toán giúp biến đổi một ảnh xám thành ảnh nhị phân (Adaptive threshold).">
+<meta property="fb:app_id" content="694952747229279">
+<meta name="theme-color" content="#ff8800">
+
+<meta name="verify-admitad" content="1b536ea375">
+<meta http-equiv="content-language" content="vi">
+<meta name="robots" content="index,follow">
+<link type="text/css" rel="stylesheet" href="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/material-icons.css"><link type="text/css" rel="stylesheet" href="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/STDIOConstructor.css"><link type="text/css" rel="stylesheet" href="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/STDIOSDK.css"><link type="text/css" rel="stylesheet" href="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/STDIOUI.css"><link type="text/css" rel="stylesheet" href="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/styles.css"><link type="text/css" rel="stylesheet" href="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/xcontroller.css"><link type="text/css" rel="stylesheet" href="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/css_articles.css"><link type="text/css" rel="stylesheet" href="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/prettify.css"><link type="text/css" rel="stylesheet" href="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/css_promotions.css"><link type="text/css" rel="stylesheet" href="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/bugs-store.css"><script type="text/javascript" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/jquery-3.1.1.min.js.download"></script><script type="text/javascript" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/jquery.autogrowtextarea.min.js.download"></script><script type="text/javascript" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/STDIOSDK.js.download"></script><script type="text/javascript" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/STDIOUI.js.download"></script><script type="text/javascript" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/xcontroller.js.download"></script><script type="text/javascript" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/qrcode.min.js.download"></script><script type="text/javascript" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/prettify.js.download"></script><script type="text/javascript" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/js_script.js.download"></script><script>$(document).ready(function(){$('textarea').autoGrow();
+IO.COMPONENTS.STORAGE.Init();
+IO.COMPONENTS.STORAGE.SetItem('STDIO_REFFER_URL','https://www.google.com/');
+IO.COMPONENTS.ICONS.LOADING.Init('<i class="material-icons md-40">&#xE8B8;</i>');
+UI.POPUPS.Init('<i class="material-icons md-40">&#xE14C;</i>');
+IO.COMPONENTS.IMAGES.LAZY.Init();
+xcontroller.init();
+prettyPrint();
+if (IO.is_function('articles.ready')) {articles.ready('article','["383","11"]','null');};});</script></head>
+<body>
+<div class="wrapper">
+<div class="wrapper-xcontroller" id="wrapper-xcontroller" style="width: 101px; height: 50px;">
+<div class="xcontroller">
+<div class="tab-buttons">
+<div class="tab-button" onclick="xcontroller.toggle(this,&#39;id-tab-user&#39;)">
+<i class="material-icons"></i>
+</div>
+<div class="tab-button" onclick="xcontroller.toggle(this,&#39;id-tab-menu&#39;)">
+<i class="material-icons"></i>
+</div>
+</div> 
+<div class="tab-tables" style="display: none;">
+<div class="tab-table" id="id-tab-user" style="display: none;">
+<div class="table-element">
+<div class="row-profiles">
+<div class="profile-picture">
+<div class="profile-picture-container size50"><div class="mask off size50"><i class="material-icons"></i></div></div> </div>
+<div class="profile-content">
+<div class="name"><i>Bạn chưa đăng nhập</i></div>
+<div class="features">
+<div class="feature">
+<a href="https://www.stdio.vn/users/join/"><i class="material-icons md-14"></i> Đăng nhập</a>
+</div>
+<div class="feature">
+<a href="https://www.stdio.vn/users/join/"><i class="material-icons md-14"></i> Đăng ký</a>
+</div>
+</div>
+</div>
+</div> 
+</div>
+</div>
+<div class="tab-table" id="id-tab-menu" style="display: none;">
+<div class="table-element">
+<div class="row-users">
+<a class="users-feature" href="https://www.stdio.vn/projects">
+<div class="icon"><i class="material-icons"></i></div>
+<div class="text">Dự án</div>
+<div class="notification"></div>
+</a>
+</div> 
+<div class="row-users">
+<a class="users-feature" href="https://www.stdio.vn/iot">
+<div class="icon"><i class="material-icons"></i></div>
+<div class="text">Internet of Things</div>
+<div class="notification"></div>
+</a>
+<a class="users-feature" href="https://www.stdio.vn/virtual">
+<div class="icon"><i class="material-icons"></i></div>
+<div class="text">VR/AR</div>
+<div class="notification"></div>
+</a>
+</div> 
+<div class="row-menu">
+<div class="button-menu">
+<a href="https://www.stdio.vn/contact">
+<i class="material-icons"></i>
+Liên hệ
+</a>
+</div>
+<div class="button-menu active">
+<a href="https://www.stdio.vn/articles/categories/all-0/1">
+<i class="material-icons"></i>
+Tài liệu
+</a>
+</div>
+<div class="button-menu">
+<a href="https://www.stdio.vn/code">
+<i class="material-icons"></i>
+Code
+</a>
+</div>
+</div> 
+</div> 
+</div> 
+</div> 
+</div>
+</div>
+<header class="wrapper-section wrapper-header">
+<div class="float">
+<div id="id_center" class="center">
+<div id="id_logo" class="header-logo">
+<a href="https://www.stdio.vn/"><img src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/img_logo.svg" title="STDIO" alt="STDIO"></a>
+</div> 
+<div class="header-menu">
+<a class="menu-item " href="https://www.stdio.vn/projects">
+Dự án
+</a>
+<a class="menu-item active" href="https://www.stdio.vn/articles/categories/all-0/1">
+Tài liệu
+</a>
+<a class="menu-item " href="https://www.stdio.vn/code">Code</a>
+<a class="menu-item " href="https://www.stdio.vn/contact">Liên hệ</a>
+</div> 
+</div> 
+</div>
+</header>
+<section class="wrapper-section wrapper_introduction">
+<div class="center wrapper_introduction_center" id="id_wrapper_introduction_center">
+<div class="intro_left"><a href="https://www.stdio.vn/" target="_self"><i class="material-icons md-18"></i></a><a href="https://www.stdio.vn/articles" target="_self"> | Bài viết</a></div>
+</div>
+</section><section class="wrapper-section wrapper-content" itemscope="" itemtype="http://schema.org/Article">
+<div class="center">
+<div class="content-column-1">
+<div class="column-element">
+<div class="subject-blog-posts">
+<div class="post">
+<div class="post-meta">
+<a class="picture" href="https://training.stdio.vn/blog/giao-duc-truyen-cam-hung-khong-chi-truyen-tri-thuc-11">
+<img alt="Giáo Dục - Truyền Cảm Hứng, Không Chỉ Truyền Tri Thức" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/dao-tao-truyen-cam-hung-khong-phai-chi-tri-thuc.jpg">
+</a>
+<div class="info">
+<h4><a href="https://training.stdio.vn/blog/giao-duc-truyen-cam-hung-khong-chi-truyen-tri-thuc-11" target="_self">Giáo Dục - Truyền Cảm Hứng, Không Chỉ Truyền Tri Thức</a></h4>
+</div>
+</div>
+<div class="post-content">
+Đào tạo bản chất là truyền cảm hứng, không phải chỉ tri thức. Việc đào tạo mang lại hiệu quả cao nếu người thầy tập trung vào giải quyết các câu hỏi “tại sao” và “làm như thế nào” thay vì dạy bạn “cái gì”. </div>
+<div class="post-more">
+<a href="https://training.stdio.vn/blog/giao-duc-truyen-cam-hung-khong-chi-truyen-tri-thuc-11">
+Xem thêm <i class="material-icons md-18"></i>
+</a>
+</div>
+</div>
+</div> 
+</div>
+</div>
+<div class="content-column-2">
+<div class="column-element">
+<div itemscope="" itemtype="http://schema.org/WebSite">
+<meta itemprop="url" content="https://www.stdio.vn/">
+<form itemprop="potentialAction" itemscope="" itemtype="http://schema.org/SearchAction" class="search_form" action="https://www.stdio.vn/articles/search" method="get" onsubmit="return articles.search.onsubmit(this)">
+<meta itemprop="target" content="https://www.stdio.vn/articles/search/?q={q}">
+<input class="search_text" itemprop="query-input" type="text" name="q" placeholder="Tìm bài viết" value="" required="">
+<button type="submit" class="search-button"><i class="material-icons md-24"></i></button>
+</form>
+</div> </div>
+<div class="column-element">
+<div class="bugs-store L">
+<a class="product" href="https://www.bugs.vn/store/products/moc-khoa-visual-studio" target="_blank">
+<div class="productBox">
+<div class="image">
+<img src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/moc-khoa-vs-ss-1.jpg">
+</div>
+<div class="info">
+<h3>Móc khóa Visual Studio</h3>
+<p>99.000₫</p>
+<p>Miễn phí giao hàng</p>
+</div>
+</div>
+</a>
+<a class="product" href="https://www.bugs.vn/store/products/moc-khoa-lightroom" target="_blank">
+<div class="productBox">
+<div class="image">
+<img src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/moc-khoa-lr-ss-1.jpg">
+</div>
+<div class="info">
+<h3>Móc khóa Lightroom</h3>
+<p>99.000₫</p>
+<p>Miễn phí giao hàng</p>
+</div>
+</div>
+</a>
+<a class="product" href="https://www.bugs.vn/store/products/moc-khoa-excel" target="_blank">
+<div class="productBox">
+<div class="image">
+<img src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/moc-khoa-excel-ss-1.jpg">
+</div>
+<div class="info">
+<h3>Móc khóa Excel</h3>
+<p>99.000₫</p>
+<p>Miễn phí giao hàng</p>
+</div>
+</div>
+</a>
+</div>
+</div>
+
+<div class="column-element">
+<div class="article-box">
+<div class="article_meta">
+<div class="meta_info_feature">
+<a href="https://www.stdio.vn/articles/printing/383/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold" class="button" title="Tạo bản in bài viết" alt="Tạo bản in bài viết">
+<i class="material-icons md-18"></i> </a>
+<div class="button" onclick="UI.POPUPS.CUSTOMIZE.Show(&#39;id_popup_qr_code&#39;)" title="Xem trên di động" alt="Xem trên di động">
+<i class="material-icons md-18"></i> </div>
+<div id="button_bookmark" class="button_wide disable">
+<i class="material-icons md-18"></i> BOOKMARK </div>
+<div class="article_meta_info_mini">
+<a href="https://www.stdio.vn/articles/comments/articles-383/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold">#383</a>
+<i class="material-icons md-18"></i> <span itemprop="datePublished" title="2015-08-29 23:52:14" content="2015-08-29 23:52:14">
+29/08/2015 23:52 </span>
+<span itemprop="dateModified" title="2016-12-06 17:18:51" content="2016-12-06 17:18:51"></span>
+<i class="material-icons md-14">visibility</i> 25694 </div>
+</div>
+<h1 itemprop="name">Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold)</h1>
+<div class="article_meta_info">
+<a href="https://www.stdio.vn/articles/categories/khoa-hoc-may-tinh-53/1">
+<span itemprop="articleSection"><b>Khoa học máy tính</b></span>
+</a>
+</div>
+</div>
+<div class="article_description">
+<span>
+<a href="https://www.stdio.vn/" alt="STDIO">STDIO</a>
+</span>
+<span>Nẳm trong loạt bài viết trong chương trình Tự Học OpenCV Qua Các Ví Dụ Thực Tế. Bài viết sẽ giới thiệu và chi tiết các thuật toán Grayscale, ảnh nhị phân và một số thuật toán giúp biến đổi một ảnh xám thành ảnh nhị phân (Adaptive threshold).</span>
+</div>
+<div class="article_outline" id="id_article_outline">
+<div class="outline_title">Nội dung bài viết</div>
+<div class="outline_box" id="id_outline_box"><div class="outline_h2"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#0-gioi-thieu">Giới thiệu</a></div><div class="outline_h2"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#1-tien-de-bai-viet">Tiền đề bài viết</a></div><div class="outline_h2"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#2-doi-tuong-huong-den">Đối tượng hướng đến</a></div><div class="outline_h2"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#3-grayscale-la-gi">GrayScale là gì?</a></div><div class="outline_h2"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#4-chuyen-doi-he-thong-mau-nbsp-rgb-sang-grayscale">Chuyển đổi hệ thống màu&nbsp;RGB sang Grayscale</a></div><div class="outline_h3"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#5-chuyen-doi-anh-xam-trong-opencv">Chuyển đổi ảnh xám trong OpenCV</a></div><div class="outline_h2"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#6-anh-nhi-phan">Ảnh nhị phân</a></div><div class="outline_h3"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#7-nhi-phan-hoa">Nhị phân hóa</a></div><div class="outline_h4"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#8-nhi-phan-hoa-trong-opencv">Nhị phân hóa trong OpenCV</a></div><div class="outline_h3"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#9-nhi-phan-hoa-nguong-dong">Nhị phân hóa ngưỡng động</a></div><div class="outline_h4"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#10-thuat-toan-otsu">Thuật toán Otsu</a></div><div class="outline_h4"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#11-thuat-toan-doi-xung">Thuật toán đối xứng</a></div><div class="outline_h4"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#12-thuat-toan-tam-giac">Thuật toán tam giác</a></div><div class="outline_h4"><a href="https://www.stdio.vn/articles/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold-383#13-nhi-phan-hoa-nguong-dong-nbsp-trong-opencv">Nhị phân hóa ngưỡng động&nbsp;trong OpenCV</a></div></div>
+</div>
+<article class="article-content" itemprop="articleBody">
+<h2 id="0-gioi-thieu" name="0-gioi-thieu">Giới thiệu</h2>
+<p><span class="article_highlight">OpenCV</span> (<span class="article_highlight">Open Computer Vision</span>) là một thư viện mã nguồn mở chuyên dùng để xử lý các vấn đề liên quan đến thị giác máy tính. Nhờ một hệ thống các giải thuật chuyên biệt, tối ưu cho việc xử lý thị giác máy tính, vì vậy tính ứng dụng của OpenCV là rất lớn.</p>
+<p>Xử lý ảnh là quá trình xử lý, thao tác hình ảnh để có một hình ảnh khác phù hợp với nhu cầu của người dùng,...</p>
+<h2 id="1-tien-de-bai-viet" name="1-tien-de-bai-viet">Tiền đề bài viết</h2>
+<p>Bài viết nằm trong loạt bài viết chương trình&nbsp;<span class="article_highlight">Tự Học OpenCV Qua Các Ví Dụ Thực Tế&nbsp;</span>được tài trợ bởi <a href="https://www.stdio.vn/">STDIO</a>. Trong bài viết sẽ giới thiệu:</p>
+<ul><li>Khái niệm và kỹ thuật ảnh xám (<span class="article_highlight">Grayscale</span>).</li>
+<li>Ảnh nhị phân và nhị phân hóa (<span class="article_highlight">Adaptive Threshold</span>).</li>
+</ul><h2 id="2-doi-tuong-huong-den" name="2-doi-tuong-huong-den">Đối tượng hướng đến</h2>
+<p>Bài viết hướng tới các bạn đọc mới tìm hiểu về xử lý ảnh, đặc biệt là với OpenCV và chưa có kiến thức tương đương.</p>
+<h2 id="3-grayscale-la-gi" name="3-grayscale-la-gi">GrayScale là gì?</h2>
+<ul><li><span style="font-size:15px;">Là một hệ thống màu có&nbsp;mô hình màu đơn giản nhất với 256 cấp độ xám biến thiên từ màu đen&nbsp;đến màu trắng.</span></li>
+<li><span style="font-size:15px;">Sản phẩm được xuất ra sẽ có màu trắng đen.</span></li>
+<li><span style="font-size:15px;">Được&nbsp;sử dụng cả trong công nghiệp in lẫn dùng trong việc thể hiện ảnh lên các thiết bị số. </span></li>
+<li>Ảnh xám (<span class="article_highlight">Gray image</span>)&nbsp;hay còn gọi là ảnh đơn sắc (<span class="article_highlight">Monochromatic</span>), mỗi giá trị điểm ảnh (Pixel) trong ma trận điểm ảnh mang giá trị từ 0 đến 255.</li>
+<li>Trong khôn gian màu RGB, để có một ảnh xám cần có phải có giá trị kênh màu Red(x, y) = Green(x, y) = Blue(x, y). (Với x,y lần lượt là tọa độ của điểm ảnh)<img alt="ss_1" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/ss_1.png">&nbsp;</li>
+</ul><h2 id="4-chuyen-doi-he-thong-mau-nbsp-rgb-sang-grayscale" name="4-chuyen-doi-he-thong-mau-nbsp-rgb-sang-grayscale">Chuyển đổi hệ thống màu&nbsp;RGB sang Grayscale</h2>
+<p>Một bức ảnh mà tập hợp của một ma trận điểm ảnh(Pixel).&nbsp;Mỗi điểm ảnh có thể được biểu diễn bằng <span class="article_highlight">n</span> bytes dưới các kênh&nbsp;màu khác nhau. Việc chuyển đổi giữa các hệ màu thông thường được thực hiện thông qua các phép biến đổi ma trận.</p>
+<p>Trong bài viết này tôi sẽ giới thiệu cách&nbsp;chuyển đổi từ ảnh 24 bits RGB sang ảnh 8 bits Grayscale. Tôi có công thức tính cường độ sáng tại một điểm ảnh từ ảnh RGB.</p>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="pln">I</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span><span class="pln">  </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0.3086</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Red</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="lit">0.6094</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Green</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="lit">0.0820</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Blue</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span><span class="pln"> </span></li><li class="L1"><span class="pln">I</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="lit">0.299</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Red</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="lit">0.587</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Green</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="lit">0.114</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Blue</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span></li></ol></pre>
+<h5>Phân tích</h5>
+<ul><li><strong>I(x, y):</strong> Là cường độ sáng tại điểm ảnh (x, y) của ảnh xám.</li>
+<li><strong>Red(x, y)</strong>: Là giá trị của kênh màu Red(Đỏ) tại điểm ảnh (x, y) của ảnh màu(RGB).</li>
+<li><strong>Green(x, y):</strong> Là giá trị của kênh màu Green(Xanh lá cây) tại điểm ảnh (x, y) của ảnh màu(RGB).</li>
+<li><strong>Blue(x, y): </strong>Là giá trị của kênh màu Blue(Xanh lơ) tại điểm ảnh (x, y) của ảnh màu(RGB).</li>
+</ul><p><span style="font-size:15px;">Tôi có công thức khác&nbsp;tính cường độ sáng tại một điểm ảnh từ ảnh RGB.</span></p>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="pln">I</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">=</span><span class="pln"> </span><span class="pun">(</span><span class="pln"> </span><span class="lit">2</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Red</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="lit">5</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Green</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">+</span><span class="pln"> </span><span class="lit">1</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> </span><span class="typ">Blue</span><span class="pun">(</span><span class="pln">x</span><span class="pun">,</span><span class="pln"> y</span><span class="pun">)</span><span class="pln"> </span><span class="pun">)</span><span class="pln"> </span><span class="pun">/</span><span class="pln"> </span><span class="lit">8</span></li></ol></pre>
+<h5>Chú ý</h5>
+<ul><li><span style="font-size:15px;">Các phép toán trong số nguyên (Int)&nbsp;nhanh hơn rất nhiều trong số thực&nbsp;(Float).</span></li>
+<li>Trong OpenCV, hệ thống màu có thứ tự các kênh màu là <span class="article_highlight">Blue-Green-Red</span>.&nbsp;</li>
+<li>Các thông số dùng để tính toán cường độ sáng cho ảnh xám như: 0.3086, 0.6094, 0.0820,... được coi là những con số đẹp do người ta nghiên cứu ra. Các con số này có thể thay đổi. Bạn hoàn toàn có thể chọn một giá trị một kênh màu hoặc chia trung bình cộng của 3 kênh màu để tìm cường độ sáng tại một điểm ảnh (Pixel).</li>
+</ul><h3 id="5-chuyen-doi-anh-xam-trong-opencv" name="5-chuyen-doi-anh-xam-trong-opencv">Chuyển đổi ảnh xám trong OpenCV</h3>
+<p>Trong OpenCV, để chuyển một tấm ảnh có hệ màu RGB sang Graysacle, hay thậm chí là các không gian màu qua lại với nhau nhờ phương thức <span class="article_highlight"><span class="article_code">cvtColor()</span>&nbsp;</span>(Convert color).&nbsp;</p>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="pln">cv</span><span class="pun">::</span><span class="pln">cvtColor</span><span class="pun">(</span><span class="pln">cv</span><span class="pun">::</span><span class="typ">InputArray</span><span class="pln"> src</span><span class="pun">,</span><span class="pln"> cv</span><span class="pun">::</span><span class="typ">OutputArray</span><span class="pln"> dst</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> code</span><span class="pun">)</span></li></ol></pre>
+<h5>Phân tích</h5>
+<ul><li><strong>src</strong>: Là hình ảnh gốc (Trong bài viết này là ảnh màu).</li>
+<li><strong>dst</strong>: Là ảnh thu được (Trong bài viết này là ảnh xám).</li>
+<li><strong>code</strong>: Là mã chuyển màu. Ví dụ: code = <span class="article_code">CV_BGR2GRAY </span>là chuyển đổi ảnh màu thành ảnh xám,...</li>
+</ul><h5>Ví dụ</h5>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="com">// www.stdio.vn</span></li><li class="L1"><span class="com">// www.stdio.vn/users/index/11/truong-dat</span></li><li class="L2"><span class="com">#include</span><span class="pln"> </span><span class="str">&lt;stdio.h&gt;</span></li><li class="L3"><span class="com">#include</span><span class="pln"> </span><span class="str">"opencv2/core/core.hpp"</span></li><li class="L4"><span class="com">#include</span><span class="pln"> </span><span class="str">"opencv2/highgui/highgui.hpp"</span></li><li class="L5"><span class="com">#include</span><span class="pln"> </span><span class="str">"opencv2/imgproc/imgproc.hpp"</span></li><li class="L6"><span class="pln">&nbsp;</span></li><li class="L7"><span class="kwd">using</span><span class="pln"> </span><span class="kwd">namespace</span><span class="pln"> cv</span><span class="pun">;</span></li><li class="L8"><span class="pln">&nbsp;</span></li><li class="L9"><span class="kwd">int</span><span class="pln"> main</span><span class="pun">()</span></li><li class="L0"><span class="pun">{</span><span class="pln">		</span></li><li class="L1"><span class="pln">	</span><span class="com">// Read image</span></li><li class="L2"><span class="pln">	</span><span class="typ">Mat</span><span class="pln"> image </span><span class="pun">=</span><span class="pln"> imread</span><span class="pun">(</span><span class="str">"stdio.png"</span><span class="pun">,</span><span class="pln"> CV_LOAD_IMAGE_COLOR</span><span class="pun">);</span></li><li class="L3"><span class="pln">	</span><span class="typ">Mat</span><span class="pln"> imageGrayscale</span><span class="pun">;</span></li><li class="L4"><span class="pln">	</span><span class="com">// Check for valid</span></li><li class="L5"><span class="pln">	</span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">image</span><span class="pun">.</span><span class="pln">data</span><span class="pun">)</span></li><li class="L6"><span class="pln">	</span><span class="pun">{</span></li><li class="L7"><span class="pln">		printf</span><span class="pun">(</span><span class="str">"Could not open or find the image\n"</span><span class="pun">);</span></li><li class="L8"><span class="pln">		</span><span class="kwd">return</span><span class="pln"> </span><span class="pun">-</span><span class="lit">1</span><span class="pun">;</span></li><li class="L9"><span class="pln">	</span><span class="pun">}</span></li><li class="L0"><span class="pln">&nbsp;</span></li><li class="L1"><span class="pln">	cvtColor</span><span class="pun">(</span><span class="pln">image</span><span class="pun">,</span><span class="pln"> imageGrayscale</span><span class="pun">,</span><span class="pln"> CV_BGR2GRAY</span><span class="pun">);</span></li><li class="L2"><span class="pln">	</span><span class="com">// Create and show image in window	</span></li><li class="L3"><span class="pln">	imshow</span><span class="pun">(</span><span class="str">"STDIO OpenCV Sample"</span><span class="pun">,</span><span class="pln"> imageGrayscale</span><span class="pun">);</span></li><li class="L4"><span class="pln">&nbsp;</span></li><li class="L5"><span class="pln">	</span><span class="com">// Wait input and exit</span></li><li class="L6"><span class="pln">	waitKey</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span></li><li class="L7"><span class="pln">&nbsp;</span></li><li class="L8"><span class="pln">	</span><span class="kwd">return</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></li><li class="L9"><span class="pun">}</span></li></ol></pre>
+<p><img alt="ss_2" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/ss_2.png"></p>
+<h2 id="6-anh-nhi-phan" name="6-anh-nhi-phan">Ảnh nhị phân</h2>
+<ul><li>Là ảnh mà giá trị của các điểm ảnh chỉ được biểu diễn bằng hai giá trị là 0 (Đen) và 255 (Trắng) (Tương ứng với 0 và 1, nhưng tôi vẫn để nguyên giá trị 0 và 255 để có thể hiểu hơn trong việc tính toán).</li>
+<li>Vì giá trị của điểm ảnh được biểu diễn bởi 2 giá trị là 0 hoặc 1, nên một điểm ảnh được biểu diễn bằng 1 bit nên ảnh có kích thước rất nhỏ.</li>
+</ul><h3 id="7-nhi-phan-hoa" name="7-nhi-phan-hoa">Nhị phân hóa</h3>
+<p>Là quá trình biến đổi một ảnh xám thành ảnh nhị phân.</p>
+<ul><li>Tôi gọi giá trị cường độ sáng tại một điểm ảnh là <span class="article_highlight">I(x,y)</span>&nbsp;.</li>
+<li><span class="article_highlight">INP(x,y)</span> là cường độ sáng của điểm ảnh trên ảnh nhị phân .</li>
+<li><span class="article_highlight"><span style="color:#333333;">(Với&nbsp;</span>0 &lt; x &lt; image.width)</span> và (<span class="article_highlight">0 &lt; y &lt; image.height)</span>.</li>
+</ul><p>Để biến đổi ảnh xám thành ảnh nhị &nbsp;phân. Ta so sánh giá trị cường độ sáng của điểm ảnh với một ngưỡng nhị phân <strong>T</strong>.&nbsp;</p>
+<ul><li>Nếu I(x,y) &gt; <strong>T</strong> thì INP(x, y) = 0 (0).</li>
+<li>Nếu I(x,y) &gt; <strong>T</strong> thì INP(x, y) = 255 (1).</li>
+</ul><h5>Chú ý</h5>
+<ul><li>Bạn có thể hoàn toàn chọn giá trị <strong>T</strong> từ 0 đến 255, nhưng thông thường nhiều người hay chọn một giá trị đó là 128 tức là giá trị trung bình của max(255) và min(0) của cường độ sáng (Intensity) của điểm ảnh.</li>
+<li>Bạn có thể dễ dàng nhận thấy với mỗi <strong>T</strong> thì có một ảnh nhị phân khác nhau (Khác nhau ở đây là cường độ sáng của các tấm ảnh nhị phân với mỗi giá trị <strong>T</strong>).</li>
+</ul><p>Để có thể thu được ảnh nhị phân mà khi đó bạn không quan tâm tới cường độ sáng, có một kỹ thuật giúp bạn là <span class="article_highlight">nhị phân hóa ngưỡng động</span>.</p>
+<h4 id="8-nhi-phan-hoa-trong-opencv" name="8-nhi-phan-hoa-trong-opencv">Nhị phân hóa trong OpenCV</h4>
+<p>Để chuyển một ảnh thành một ảnh nhị phân, sử dụng phương thức <span class="article_code">threshold()</span>.</p>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="pln">threshold</span><span class="pun">(</span><span class="pln">cv</span><span class="pun">::</span><span class="typ">InputArray</span><span class="pln"> src</span><span class="pun">,</span><span class="pln"> cv</span><span class="pun">::</span><span class="typ">OutputArray</span><span class="pln"> dst</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">double</span><span class="pln"> thresh</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">double</span><span class="pln"> maxval</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> type</span><span class="pun">);</span></li></ol></pre>
+<h5>Phân tích</h5>
+<ul><li><strong>src</strong>: Là hình ảnh gốc (Trong bài viết này là ảnh màu).</li>
+<li><strong>dst</strong>: Là ảnh thu được (Trong bài viết này là ảnh nhị phân).</li>
+<li><strong>thresh</strong>: Là ngưỡng nhị phân <strong>T</strong>.</li>
+<li><strong>maxval:&nbsp;</strong>Là giá trị lớn nhất trong ảnh (maxval = 255 đối với ảnh xám).</li>
+<li><strong>type</strong>: Là kiểu nhị phân.&nbsp;</li>
+</ul><h5>Ví dụ</h5>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="com">// www.stdio.vn</span></li><li class="L1"><span class="com">// www.stdio.vn/users/index/11/truong-dat</span></li><li class="L2"><span class="com">#include</span><span class="pln"> </span><span class="str">&lt;stdio.h&gt;</span></li><li class="L3"><span class="com">#include</span><span class="pln"> </span><span class="str">"opencv2/core/core.hpp"</span></li><li class="L4"><span class="com">#include</span><span class="pln"> </span><span class="str">"opencv2/highgui/highgui.hpp"</span></li><li class="L5"><span class="com">#include</span><span class="pln"> </span><span class="str">"opencv2/imgproc/imgproc.hpp"</span></li><li class="L6"><span class="pln">&nbsp;</span></li><li class="L7"><span class="kwd">using</span><span class="pln"> </span><span class="kwd">namespace</span><span class="pln"> cv</span><span class="pun">;</span></li><li class="L8"><span class="pln">&nbsp;</span></li><li class="L9"><span class="kwd">int</span><span class="pln"> main</span><span class="pun">()</span></li><li class="L0"><span class="pun">{</span><span class="pln">		</span></li><li class="L1"><span class="pln">	</span><span class="com">// Read image</span></li><li class="L2"><span class="pln">	</span><span class="typ">Mat</span><span class="pln"> image </span><span class="pun">=</span><span class="pln"> imread</span><span class="pun">(</span><span class="str">"stdio.png"</span><span class="pun">,</span><span class="pln"> CV_LOAD_IMAGE_GRAYSCALE</span><span class="pun">);</span></li><li class="L3"><span class="pln">	</span><span class="typ">Mat</span><span class="pln"> imageBinary</span><span class="pun">;</span></li><li class="L4"><span class="pln">	</span><span class="com">// Check for valid</span></li><li class="L5"><span class="pln">	</span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">image</span><span class="pun">.</span><span class="pln">data</span><span class="pun">)</span></li><li class="L6"><span class="pln">	</span><span class="pun">{</span></li><li class="L7"><span class="pln">		printf</span><span class="pun">(</span><span class="str">"Could not open or find the image\n"</span><span class="pun">);</span></li><li class="L8"><span class="pln">		</span><span class="kwd">return</span><span class="pln"> </span><span class="pun">-</span><span class="lit">1</span><span class="pun">;</span></li><li class="L9"><span class="pln">	</span><span class="pun">}</span></li><li class="L0"><span class="pln">&nbsp;</span></li><li class="L1"><span class="pln">	threshold</span><span class="pun">(</span><span class="pln">image</span><span class="pun">,</span><span class="pln"> imageBinary</span><span class="pun">,</span><span class="pln"> </span><span class="lit">220</span><span class="pun">,</span><span class="pln"> </span><span class="lit">255</span><span class="pun">,</span><span class="pln"> CV_THRESH_BINARY</span><span class="pun">);</span></li><li class="L2"><span class="pln">	</span><span class="com">// Create and show image in window	</span></li><li class="L3"><span class="pln">	imshow</span><span class="pun">(</span><span class="str">"STDIO OpenCV Sample"</span><span class="pun">,</span><span class="pln"> imageBinary</span><span class="pun">);</span></li><li class="L4"><span class="pln">&nbsp;</span></li><li class="L5"><span class="pln">	</span><span class="com">// Wait input and exit</span></li><li class="L6"><span class="pln">	waitKey</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span></li><li class="L7"><span class="pln">&nbsp;</span></li><li class="L8"><span class="pln">	</span><span class="kwd">return</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></li><li class="L9"><span class="pun">}</span></li></ol></pre>
+<p><img alt="ss_3" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/ss_3.png"></p>
+<h3 id="9-nhi-phan-hoa-nguong-dong" name="9-nhi-phan-hoa-nguong-dong">Nhị phân hóa ngưỡng động</h3>
+<p>Ý tưởng:</p>
+<ol><li>Chia tấm ảnh thành nhiều khu vực, cửa sổ&nbsp;khác nhau (Region).</li>
+<li>Dùng một thuật toán để tìm một giá trị <strong>T</strong> phù hợp với từng khu vực, cửa sổ (Region).</li>
+<li>Áp dụng phương pháp nhị phân hóa cho từngkhu vực, cửa sổ (Region) với <strong>T</strong> phù hợp.</li>
+</ol><p>Điều quan trọng trong kĩ thuật này là phải tìm một giá trị <strong>T</strong> phù hợp với từng khu vực, cửa sổ (Region) hoặc cả tấm ảnh. Có rất nhiều phương pháp để tìm <strong>T</strong>, ở nội dung tiếp theo tôi sẽ giới thiệu một số thuật toán giúp tìm kiếm giá trị <strong>T</strong> này.</p>
+<h4 id="10-thuat-toan-otsu" name="10-thuat-toan-otsu">Thuật toán Otsu</h4>
+<p><strong>Bước 1:</strong>&nbsp;Xác định <span class="article_highlight">T1</span>. Giá trị cho <span class="article_highlight">T1</span>&nbsp;ban đầu nên chọn là (0+255) / 2 = 128.</p>
+<p><strong>Bước 2:</strong>&nbsp;Phân loại thành 2 nhóm điểm ảnh.&nbsp;&nbsp;</p>
+<ul><li>Loại 1 <strong>(</strong><span class="article_highlight">Type1</span>): chứa tất cả các điểm ảnh có giá trị cường độ sáng (Intensity) &lt;= <strong>T</strong>.&nbsp; &nbsp;&nbsp;</li>
+<li>Loại 2 (<span class="article_highlight">Type2</span>): chứa tất cả các điểm ảnh có giá trị cường độ sáng (Intensity) &gt; <strong>T</strong>.</li>
+</ul><p><strong>Bước 3:</strong>&nbsp;Tính giá trị cường độ sáng trung bình (<span class="article_highlight">iAverage</span>) cho Type1 (<span class="article_highlight">iAverage1</span>) và Type2 (<span class="article_highlight">iAverage2</span>).</p>
+<p><strong>Bước 4:</strong>&nbsp;Tính giá trị <span class="article_highlight">T2</span> theo công thức (iAverage1 + iAverage2) /2.</p>
+<p><strong>Bước 5:</strong>&nbsp;So sánh T1 và T2.&nbsp;</p>
+<ul><li>Nếu giá trị chênh lệch của T1 và T2 &lt;= Delta (một giá trị cho trước) thì T2 chính là <strong>T</strong> cần tìm.&nbsp;</li>
+<li>Nếu giá trị chênh lệch của T1 và T2 &gt; Delta Deltal thì quay lại <strong>Bước 1</strong>.</li>
+</ul><p><img alt="ss_4" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/ss_4.png"></p>
+<h4 id="11-thuat-toan-doi-xung" name="11-thuat-toan-doi-xung">Thuật toán đối xứng</h4>
+<p><strong>Bước 1</strong>: &nbsp; Khởi&nbsp;tạo&nbsp;mảng Histogram (histogram).&nbsp;Tìm&nbsp;giá&nbsp;trị cường độ sáng (intensityMax) có tuần suất xuất hiện nhiều nhất&nbsp;<span style="font-size:15px;">histogram</span>[<span style="font-size:15px;">i</span><span style="font-size:15px;">ntensityMax</span>].</p>
+<p><strong>Bước 2</strong>: Duyệt toàn bộ các mức xám giảm từ 255 đến <span style="font-size:15px;">i</span><span style="font-size:15px;">ntensityMax</span>. Nếu tại mức xám nào có tuần&nbsp;suất xuất hiện trên ảnh là 5% thì dừng lại. Lấy giá trị đối xứng qua histogram[intensityMax] là ngưỡng động <strong>T</strong>.</p>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="kwd">for</span><span class="pln"> </span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> indexIntensity </span><span class="pun">=</span><span class="pln"> </span><span class="lit">255</span><span class="pun">;</span><span class="pln"> indexIntensity </span><span class="pun">&gt;=</span><span class="pln"> intensityMax</span><span class="pun">;</span><span class="pln"> indexIntensity</span><span class="pun">--)</span><span class="pln"> </span></li><li class="L1"><span class="pun">{</span><span class="pln">  </span></li><li class="L2"><span class="pln">&nbsp;   frequency </span><span class="pun">=</span><span class="pln"> histogram</span><span class="pun">[</span><span class="pln">indexIntensity</span><span class="pun">];</span></li><li class="L3"><span class="pln">&nbsp;</span></li><li class="L4"><span class="pln">&nbsp;   </span><span class="kwd">if</span><span class="pln">  </span><span class="pun">((</span><span class="kwd">float</span><span class="pun">)</span><span class="pln">frequency </span><span class="pun">/</span><span class="pln"> </span><span class="pun">(</span><span class="pln">image</span><span class="pun">.</span><span class="typ">Width</span><span class="pln"> </span><span class="pun">*</span><span class="pln"> image</span><span class="pun">.</span><span class="typ">Height</span><span class="pun">)</span><span class="pln"> </span><span class="pun">==</span><span class="pln"> </span><span class="lit">0.05f</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></li><li class="L5"><span class="pln">        split </span><span class="pun">=</span><span class="pln"> indexInteensity</span><span class="pun">;</span></li><li class="L6"><span class="pln">        </span><span class="kwd">break</span><span class="pun">;</span></li><li class="L7"><span class="pln">&nbsp;   </span><span class="pun">}</span></li><li class="L8"><span class="pun">}</span><span class="pln"> </span></li><li class="L9"><span class="pln">    </span></li><li class="L0"><span class="pln">T </span><span class="pun">=</span><span class="pln"> intensityMax </span><span class="pun">-</span><span class="pln"> </span><span class="pun">(</span><span class="pln">split </span><span class="pun">-</span><span class="pln"> intensityMax</span><span class="pun">);</span></li></ol></pre>
+<p><img alt="ss_5" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/ss_5.png"></p>
+<h4 id="12-thuat-toan-tam-giac" name="12-thuat-toan-tam-giac">Thuật toán tam giác</h4>
+<p><strong>Bước 1:</strong> Khởi tạo mảng Histogram (<span style="font-size:15px;">histogram).</span></p>
+<ul><li>Tìm giá trị <span style="font-size:15px;">i</span><span style="font-size:15px;">ntensityMax và</span>&nbsp;<span style="font-size:15px;">histogram[i</span><span style="font-size:15px;">ntensityMax].&nbsp;</span></li>
+<li><span style="font-size:15px;">Tìm giá trị&nbsp;</span><span style="font-size:15px;">i</span><span style="font-size:15px;">ntensityMin&nbsp;và</span><span style="font-size:15px;">&nbsp;</span><span style="font-size:15px;">histogram[i</span><span style="font-size:15px;">ntensittyMin]. &nbsp; &nbsp;</span></li>
+</ul><p><strong>Bước 2:</strong> Duyệt toàn bộ các mức xám từ <span style="font-size:15px;">i</span><span style="font-size:15px;">ntensityMin&nbsp;</span>đến <span style="font-size:15px;">i</span><span style="font-size:15px;">ntensityMax&nbsp;</span>. Tính khoảng cách tương ứng sau đó xét ngưỡng <strong>T</strong>&nbsp;bằng giá trị mức xám có khoảng cách lớn nhất.&nbsp;</p>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="kwd">for</span><span class="pun">(</span><span class="kwd">int</span><span class="pln"> index </span><span class="pun">=</span><span class="pln"> intensityMin</span><span class="pun">+</span><span class="lit">1</span><span class="pun">;</span><span class="pln"> index </span><span class="pun">&lt;</span><span class="pln"> intensityMax</span><span class="pun">;</span><span class="pln"> index</span><span class="pun">++)</span></li><li class="L1"><span class="pun">{</span><span class="pln"> </span></li><li class="L2"><span class="pln">    distance </span><span class="pun">=</span><span class="pln"> findDistance </span><span class="pun">(</span><span class="typ">Point</span><span class="pun">(</span><span class="pln">intensityMax</span><span class="pun">,</span><span class="pln"> histogram</span><span class="pun">[</span><span class="pln">intensityMax</span><span class="pun">]),</span></li><li class="L3"><span class="pln">&nbsp;                            </span><span class="typ">Point</span><span class="pun">(</span><span class="pln">intensityMin</span><span class="pun">,</span><span class="pln"> histogram</span><span class="pun">[</span><span class="pln">intensityMin</span><span class="pun">]),</span></li><li class="L4"><span class="pln">&nbsp;                            </span><span class="typ">Point</span><span class="pun">(</span><span class="pln">index</span><span class="pun">,</span><span class="pln"> histogram</span><span class="pun">[</span><span class="pln">index</span><span class="pun">]));</span></li><li class="L5"><span class="pln">  </span></li><li class="L6"><span class="pln">    </span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(</span><span class="pln">distanceMax </span><span class="pun">&lt;</span><span class="pln"> distance</span><span class="pun">)</span><span class="pln"> </span><span class="pun">{</span></li><li class="L7"><span class="pln">&nbsp;       distanceMax </span><span class="pun">=</span><span class="pln"> distance</span><span class="pun">;</span></li><li class="L8"><span class="pln">&nbsp;       T </span><span class="pun">=</span><span class="pln"> index</span><span class="pun">;</span><span class="pln">   </span></li><li class="L9"><span class="pln">    </span><span class="pun">}</span><span class="pln">  </span></li><li class="L0"><span class="pun">}</span></li></ol></pre>
+<h5>Phân tích</h5>
+<p>Phương thức findDistance(Point a, Point b, Point c) là tìm khoảng cách từ một điểm đến một đường thẳng với các tham số:</p>
+<ul><li><span class="article_highlight"><strong>a </strong></span>và <strong><span class="article_highlight">b</span></strong>: Lần lượt là 2 điểm khác biệt trên đường thẳng.</li>
+<li><span class="article_highlight"><strong>c</strong></span>: là điểm cần tìm khoảng cách tới đường thẳng.</li>
+</ul><p><img alt="ss_6" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/ss_6.png"></p>
+<h4 id="13-nhi-phan-hoa-nguong-dong-nbsp-trong-opencv" name="13-nhi-phan-hoa-nguong-dong-nbsp-trong-opencv">Nhị phân hóa ngưỡng động&nbsp;trong OpenCV</h4>
+<p>Để chuyển một ảnh thành một ảnh nhị phân, sử dụng phương thức <span class="article_code">adaptiveThreshold()</span></p>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="pln">adaptiveThreshold</span><span class="pun">(</span><span class="pln">cv</span><span class="pun">::</span><span class="typ">InputArray</span><span class="pln"> src</span><span class="pun">,</span><span class="pln"> cv</span><span class="pun">::</span><span class="typ">OutputArray</span><span class="pln"> dst</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">double</span><span class="pln"> maxValue</span><span class="pun">,</span></li><li class="L1"><span class="pln">&nbsp;                 </span><span class="kwd">int</span><span class="pln"> adaptiveMethod</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> thresholdType</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">int</span><span class="pln"> blockSize</span><span class="pun">,</span><span class="pln"> </span><span class="kwd">double</span><span class="pln"> C</span><span class="pun">);</span></li></ol></pre>
+<h5>Phân tích</h5>
+<ul><li><strong>src</strong>: Là hình ảnh gốc (Trong bài viết này là ảnh màu).</li>
+<li><strong>dst</strong>: Là ảnh thu được (Trong bài viết này là ảnh nhị phân).</li>
+<li><strong>thresh</strong>: Là ngưỡng nhị phân&nbsp;<strong>T</strong>.</li>
+<li><strong>maxValue:&nbsp;</strong>Là giá trị lớn nhất trong ảnh (maxval = 255 đối với ảnh xám).</li>
+<li><strong>adaptiveMethod</strong>: Là cách thức nhị phân với ngưỡng động, nó chính là cách tính giá trị ngưỡng nhị phân trong từng vùng cần nhị phân.</li>
+<li><strong>thresholdType</strong>: Là kiểu nhị phân.&nbsp;</li>
+<li><strong>blockSize</strong>: Là kích thước của cửa sổ (Region) áp dụng cho việc tính toán ngưỡng động (bạn nên chọn các giá trị %3 =&nbsp;0 ||&nbsp;%5 = 0&nbsp;||&nbsp;%7 = 0).</li>
+<li><strong>C</strong>: Là một thông số để bù trừ trong trường hợp ảnh có độ tương phản quá lớn.</li>
+</ul><h5>Ví dụ</h5>
+<pre class="prettyprint linenums prettyprinted" style=""><ol class="linenums"><li class="L0"><span class="com">// www.stdio.vn</span></li><li class="L1"><span class="com">// www.stdio.vn/user/index/11/truong-dat</span></li><li class="L2"><span class="com">#include</span><span class="pln"> </span><span class="str">&lt;stdio.h&gt;</span></li><li class="L3"><span class="com">#include</span><span class="pln"> </span><span class="str">"opencv2/core/core.hpp"</span></li><li class="L4"><span class="com">#include</span><span class="pln"> </span><span class="str">"opencv2/highgui/highgui.hpp"</span></li><li class="L5"><span class="com">#include</span><span class="pln"> </span><span class="str">"opencv2/imgproc/imgproc.hpp"</span></li><li class="L6"><span class="pln">&nbsp;</span></li><li class="L7"><span class="kwd">using</span><span class="pln"> </span><span class="kwd">namespace</span><span class="pln"> cv</span><span class="pun">;</span></li><li class="L8"><span class="pln">&nbsp;</span></li><li class="L9"><span class="kwd">int</span><span class="pln"> main</span><span class="pun">()</span></li><li class="L0"><span class="pun">{</span><span class="pln">		</span></li><li class="L1"><span class="pln">	</span><span class="com">// Read image</span></li><li class="L2"><span class="pln">	</span><span class="typ">Mat</span><span class="pln"> image </span><span class="pun">=</span><span class="pln"> imread</span><span class="pun">(</span><span class="str">"stdio.png"</span><span class="pun">,</span><span class="pln"> CV_LOAD_IMAGE_GRAYSCALE</span><span class="pun">);</span></li><li class="L3"><span class="pln">	</span><span class="typ">Mat</span><span class="pln"> imageBinary</span><span class="pun">;</span></li><li class="L4"><span class="pln">	</span><span class="com">// Check for valid</span></li><li class="L5"><span class="pln">	</span><span class="kwd">if</span><span class="pln"> </span><span class="pun">(!</span><span class="pln">image</span><span class="pun">.</span><span class="pln">data</span><span class="pun">)</span></li><li class="L6"><span class="pln">	</span><span class="pun">{</span></li><li class="L7"><span class="pln">		printf</span><span class="pun">(</span><span class="str">"Could not open or find the image\n"</span><span class="pun">);</span></li><li class="L8"><span class="pln">		</span><span class="kwd">return</span><span class="pln"> </span><span class="pun">-</span><span class="lit">1</span><span class="pun">;</span></li><li class="L9"><span class="pln">	</span><span class="pun">}</span></li><li class="L0"><span class="pln">&nbsp;</span></li><li class="L1"><span class="pln">	adaptiveThreshold</span><span class="pun">(</span><span class="pln">image</span><span class="pun">,</span><span class="pln"> imageBinary</span><span class="pun">,</span><span class="pln"> </span><span class="lit">255</span><span class="pun">,</span><span class="pln"> CV_ADAPTIVE_THRESH_MEAN_C</span><span class="pun">,</span><span class="pln"> </span></li><li class="L2"><span class="pln">                                        CV_THRESH_BINARY</span><span class="pun">,</span><span class="pln"> </span><span class="lit">9</span><span class="pun">,</span><span class="pln"> </span><span class="lit">0</span><span class="pun">);</span></li><li class="L3"><span class="pln">	</span><span class="com">// Create and show image in window	</span></li><li class="L4"><span class="pln">	imshow</span><span class="pun">(</span><span class="str">"STDIO OpenCV Sample"</span><span class="pun">,</span><span class="pln"> imageBinary</span><span class="pun">);</span></li><li class="L5"><span class="pln">&nbsp;</span></li><li class="L6"><span class="pln">	</span><span class="com">// Wait input and exit</span></li><li class="L7"><span class="pln">	waitKey</span><span class="pun">(</span><span class="lit">0</span><span class="pun">);</span></li><li class="L8"><span class="pln">&nbsp;</span></li><li class="L9"><span class="pln">	</span><span class="kwd">return</span><span class="pln"> </span><span class="lit">0</span><span class="pun">;</span></li><li class="L0"><span class="pun">}</span></li></ol></pre>
+<p><img alt="ss_7" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/ss_7.png"></p> </article>
+<div class="article-tag">
+<div class="ele-tag"><i class="material-icons md-18">attachment</i> <b>Tags</b></div>
+<div class="ele-tag" id="" title="">opencv</div><div class="ele-tag" id="" title="">thị giác máy tính</div><div class="ele-tag" id="" title="">computer vision</div><div class="ele-tag" id="" title="">grayscale</div><div class="ele-tag" id="" title="">adaptive threshold</div> </div>
+</div>
+<div class="article_author" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+<a class="author_title" href="https://www.stdio.vn/users/truong-xuan-dat-11">
+<span itemprop="name">Trương Xuân Đạt</span>
+</a>
+</div> </div>
+<div class="column-element">
+<div class="article-promotion">
+<div class="icon">
+<img src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/article-promotion-icon.svg">
+</div>
+<div class="content">
+<h3>Bạn cần hỗ trợ các dự án kết nối không dây?</h3>
+<p>
+Quí doanh nghiệp, cá nhân cần hỗ trợ, hợp tác các dự án IoT, kết nối không dây. Vui lòng <a href="https://www.stdio.vn/contact">liên hệ</a>, hoặc gọi trực tiếp 0942.111912.
+</p>
+<ul>
+<li><b>TỪ KHÓA</b></li>
+<li>Arduino</li>
+<li>ESP32</li>
+<li>ESP8266</li>
+<li>Wifi</li>
+<li>Bluetooth</li>
+<li>Zigbee</li>
+<li>Raspberry Pi</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="column-element">
+<div class="comments-box">
+<div class="title_large title_color_orange">
+<span><i class="material-icons md-18"></i> THẢO LUẬN</span>
+</div>
+<div class="comments-component" id="id-comments-component">
+<div class="comment_input_container" id="id_comment_input_container">
+	<div class="comment_input">
+		<div class="comment">
+			<div class="comment_input_picture">
+				<div class="profile-picture-container size64"><div class="mask off size64"><i class="material-icons"></i></div></div>			</div>
+			<div class="comment_input_content">
+				<textarea rows="5" maxlength="32768" placeholder="..." disabled="" style="overflow: hidden; min-height: 5em; height: 32px;"></textarea><div class="autogrow-textarea-mirror" style="display: none; overflow-wrap: break-word; white-space: normal; padding: 5px 10px; width: 562px; font-family: roboto, Arial, Helvetica, sans-serif; font-size: 13.6px; line-height: normal;">.<br>.</div>
+			</div>
+		</div>
+		<div class="function">
+			<div class="function_panel">
+					<a href="https://www.stdio.vn/users/join/" class="button_wide">ĐĂNG NHẬP</a>
+			<div class="button_wide disable">GỬI</div>
+					</div>
+		</div> <!-- function -->
+	</div>
+</div> <!-- comment_input_container -->
+
+<div class="comments_container" id="id_comments_container-383">
+	
+<div class="comment_element">
+
+	<div class="comment_info">
+		<div class="comment_picture">
+			<div class="profile-picture-container size50"><img width="50" height="50" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/avatar_128.png"></div>		</div>
+		<div class="comment_content">
+			<div class="comment_content_meta">
+								<a href="https://www.stdio.vn/users/gordon-freeman-475">Gordon Freeman</a>				<a href="https://www.stdio.vn/articles/comments/comments-246/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold"><span>07/09/2015 12:22</span></a>			</div>
+			<div class="comment_content_text word_break">
+				<p>I(x, y)  = 0.3086 * Red(x, y) + 0.6094 * Green(x, y) + 0.0820 * Blue(x, y) </p>
+<p>    I(x, y) = 0.299 * Red(x, y) + 0.587 * Green(x, y) + 0.114 * Blue(x, y)</p>
+<p>Tác giả cho mình hỏi tại sao lại có những thông số như trên trong công thức tính cường độ sáng tại một điểm ảnh?</p>			</div>
+		</div>
+	</div> <!-- comment_info -->
+
+	<div class="replies_container" id="id_replies_container-246">
+	<div class="reply_element">
+	<div class="reply_info">
+		<div class="reply_picture">
+			<div class="profile-picture-container size32"><img width="32" height="32" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/avatar_128(1).png"></div>		</div>
+		<div class="reply_content">
+			<div class="reply_content_meta">
+								<a href="https://www.stdio.vn/users/la-kien-vinh-1">La Kiến Vinh</a>				<a href="https://www.stdio.vn/articles/comments/comments-247/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold"><span>07/09/2015 12:30</span></a>			</div>
+			<div class="reply_content_text word_break">
+				<p>Các con số đó là "con số đẹp" mà người ta đã nghiên cứu ra, theo anh thì tùy quan điểm mà dùng con số đó, thông thường anh sẽ lấy 1 kênh màu hoặc đôi lúc cho nhanh thì chia đều trung bình cộng của 3 kênh màu. Quan điểm cá nhân là anh sẽ không dùng các con số đó nếu không cần thiết.
+</p>
+<p>
+</p>
+<p>Để hiểu hơn về các con số đó, em có thể tham khảo trên wiki vì họ nêu rất kỹ: https://en.wikipedia.org/wiki/Grayscale</p>			</div>
+		</div>
+	</div>
+</div> <!-- reply_element --><div class="reply_element">
+	<div class="reply_info">
+		<div class="reply_picture">
+			<div class="profile-picture-container size32"><img width="32" height="32" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/avatar_128(2).png"></div>		</div>
+		<div class="reply_content">
+			<div class="reply_content_meta">
+								<a class="owner" title="Tác giả" href="https://www.stdio.vn/users/truong-xuan-dat-11">Trương Xuân Đạt</a>				<a href="https://www.stdio.vn/articles/comments/comments-248/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold"><span>07/09/2015 15:26</span></a>			</div>
+			<div class="reply_content_text word_break">
+				<p>Chào bạn, rất vui vì câu hỏi của bạn. Như anh La Kiến Vinh đã nói, đó là các "con số đẹp" mà người ta nghiên cứu ra. Bạn hoàn toàn có thể lấy một kênh màu hoặc chia trung bình cộng của kênh màu ra. Cũng theo như khoa học nghiên cứu, mắt người có sự nhạy cảm với màu đỏ và màu xanh lá cây hơn là màu xanh da trời, vì vậy các thông số với kênh màu xanh lơ thấp hơn hẳn so với các kênh màu đỏ và xanh lá cây.</p>			</div>
+		</div>
+	</div>
+</div> <!-- reply_element --><div class="reply_element">
+	<div class="reply_info">
+		<div class="reply_picture">
+			<div class="profile-picture-container size32"><img width="32" height="32" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/avatar_128(1).png"></div>		</div>
+		<div class="reply_content">
+			<div class="reply_content_meta">
+								<a href="https://www.stdio.vn/users/la-kien-vinh-1">La Kiến Vinh</a>				<a href="https://www.stdio.vn/articles/comments/comments-249/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold"><span>07/09/2015 16:12</span></a>			</div>
+			<div class="reply_content_text word_break">
+				<p>Hi Trương Đạt, thêm thông tin cho em - tùy theo khu vực, ví dụ như mình ở nước có nhiều tuyết thì độ nhạy cảm của mắt mình phù hợp với màu thiên về lạnh (trắng), còn nếu mình ở các nước nhiệt đới thì mình lại phù hợp với các màu nóng hơn.</p>			</div>
+		</div>
+	</div>
+</div> <!-- reply_element --><div class="reply_element">
+	<div class="reply_info">
+		<div class="reply_picture">
+			<div class="profile-picture-container size32"><img width="32" height="32" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/avatar_128(3).png"></div>		</div>
+		<div class="reply_content">
+			<div class="reply_content_meta">
+								<a href="https://www.stdio.vn/users/phatpx95-789"> Phatpx95</a>				<a href="https://www.stdio.vn/articles/comments/comments-250/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold"><span>08/12/2015 15:27</span></a>			</div>
+			<div class="reply_content_text word_break">
+				<p>Các bài của anh rất hay và hữu ích ạ, anh làm tương tự với EmguCv thì hay quá :D</p>			</div>
+		</div>
+	</div>
+</div> <!-- reply_element --><div class="reply_element">
+	<div class="reply_info">
+		<div class="reply_picture">
+			<div class="profile-picture-container size32"><img width="32" height="32" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/avatar_128(4).png"></div>		</div>
+		<div class="reply_content">
+			<div class="reply_content_meta">
+								<a href="https://www.stdio.vn/users/vu-quang-huy-3">Vũ Quang Huy</a>				<a href="https://www.stdio.vn/articles/comments/comments-251/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold"><span>11/12/2015 09:46</span></a>			</div>
+			<div class="reply_content_text word_break">
+				<p>Hello em,</p>
+<p></p>
+<p>Bài viết đang được hoàn tất và sẽ sớm thông tin đến cho em nhé :).</p>			</div>
+		</div>
+	</div>
+</div> <!-- reply_element --><div class="reply_element">
+	<div class="reply_info">
+		<div class="reply_picture">
+			<div class="profile-picture-container size32"><img width="32" height="32" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/avatar_128(2).png"></div>		</div>
+		<div class="reply_content">
+			<div class="reply_content_meta">
+								<a class="owner" title="Tác giả" href="https://www.stdio.vn/users/truong-xuan-dat-11">Trương Xuân Đạt</a>				<a href="https://www.stdio.vn/articles/comments/comments-252/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold"><span>12/12/2015 09:41</span></a>			</div>
+			<div class="reply_content_text word_break">
+				<p>Chào Phatpx95,</p>
+<p></p>
+<p>Rất cám ơn về lời nhận xét của em, anh cũng như các author khác trong STDIO sẽ luôn cố gắng.</p>
+<p>Các bài viết đang được chuẩn bị và hoàn tất. </p>
+<p></p>
+<p>Thân.</p>			</div>
+		</div>
+	</div>
+</div> <!-- reply_element --><div class="reply_element">
+	<div class="reply_info">
+		<div class="reply_picture">
+			<div class="profile-picture-container size32"><img width="32" height="32" src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/avatar_128(3).png"></div>		</div>
+		<div class="reply_content">
+			<div class="reply_content_meta">
+								<a href="https://www.stdio.vn/users/phatpx95-789"> Phatpx95</a>				<a href="https://www.stdio.vn/articles/comments/comments-253/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold"><span>10/02/2016 07:40</span></a>			</div>
+			<div class="reply_content_text word_break">
+				<p>Em cảm ơn anh ạ :D</p>			</div>
+		</div>
+	</div>
+</div> <!-- reply_element -->	</div> <!-- replies_container -->
+	</div> <!-- comment_element -->
+<div class="comment_element">
+
+	<div class="comment_info">
+		<div class="comment_picture">
+			<div class="profile-picture-container size50"><div class="mask off size50"><i class="material-icons"></i></div></div>		</div>
+		<div class="comment_content">
+			<div class="comment_content_meta">
+								<a href="https://www.stdio.vn/users/algorithms-2383"> Algorithms</a>				<a href="https://www.stdio.vn/articles/comments/comments-995/ky-thuat-grayscale-va-nhi-phan-hoa-anh-adaptive-threshold"><span>16/03/2017 16:00</span></a>			</div>
+			<div class="comment_content_text word_break">
+				<p>Cảm ơn bài viết của anh Đạt, cho em hỏi cách chuyển ảnh xám qua ảnh màu như thế nào vậy ạ, và thuật toán lấy ngưỡng tự động nào là tốt nhất ạ?</p>			</div>
+		</div>
+	</div> <!-- comment_info -->
+
+	<div class="replies_container" id="id_replies_container-995">
+		</div> <!-- replies_container -->
+	</div> <!-- comment_element -->
+</div> <!-- comments_container --></div> 
+</div>
+</div>
+</div>
+<div class="content-column-3">
+<div class="column-element">
+<div class="article-promo-ele">
+<div class="title_base title_color_orange"><span><i class="material-icons"></i> Bài cùng loại</span></div>
+<ul>
+<li><a href="https://www.stdio.vn/articles/loc-anh-bang-phep-tuong-quan-va-tich-chap-562">
+Lọc Ảnh Bằng Phép Tương Quan Và Tích Chập <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+<li><a href="https://www.stdio.vn/articles/ly-do-ton-tai-data-alignment-struct-alignment-memory-alignment-529">
+Lý Do Tồn Tại Data Alignment (Struct Alignment, Memory Alignment) <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+<li><a href="https://www.stdio.vn/articles/so-luoc-ve-to-chuc-ieee-524">
+Sơ Lược Về Tổ Chức IEEE <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+<li><a href="https://www.stdio.vn/articles/co-ban-ve-anh-cach-open-cv-luu-tru-du-lieu-anh-463">
+Cơ Bản Về Ảnh - Cách OpenCV Lưu Trữ Dữ Liệu Ảnh <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+<li><a href="https://www.stdio.vn/articles/toan-tu-khung-xuong-trong-anh-nhi-phan-skeleton-binary-morphology-462">
+Toán Tử Khung Xương Trong Ảnh Nhị Phân - Skeleton Binary Morphology <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+<li><a href="https://www.stdio.vn/articles/loc-gaussian-giao-dien-don-gian-qt-opencv-447">
+Lọc Gaussian - Giao Diện Đơn Giản: Qt + OpenCV <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+<li><a href="https://www.stdio.vn/articles/gioi-thieu-ve-mo-hinh-svm-436">
+Giới Thiệu Về Mô Hình SVM <i class="material-icons md-18">keyboard_arrow_right</i>
+</a></li>
+</ul>
+</div>
+</div> <div class="column-element">
+<div class="users_inspiration">
+<div class="inspiration_icon"><i class="material-icons md-36"></i></div>
+<div class="inspiration_content">
+Bất kì kẻ ngốc nào cũng có thể viết mã mà máy tính có thể hiểu được. Người lập trình giỏi viết mã mà con người có thể hiểu được. <a href="https://en.wikipedia.org/wiki/John_Johnson_(composer)" title="Bất kì kẻ ngốc nào cũng có thể viết mã mà máy tính có thể hiểu được. Người lập trình giỏi viết mã mà con người có thể hiểu được." alt="Bất kì kẻ ngốc nào cũng có thể viết mã mà máy tính có thể hiểu được. Người lập trình giỏi viết mã mà con người có thể hiểu được.">
+<span>John Johnson</span>
+</a>
+</div>
+</div>
+</div>
+<div class="column-element">
+<a href="https://www.stdio.vn/users/join/" class="users_recommend_join">
+<div class="recommend_icon">
+<i class="material-icons md-36"></i><span>Tham gia STDIO</span> </div>
+<div class="recommend_content">
+Đăng ký thành viên để sử dụng đầy đủ dịch vụ, thảo luận, học hỏi tại STDIO. </div>
+</a>
+</div>
+<div class="column-element"></div>
+</div>
+</div>
+</section>
+<div id="id_popup_qr_code" class="ui_popups">
+<div class="ui_popups_background"></div>
+<div class="ui_popups_content">
+<div class="ui_popups_content_stack">
+<div class="popup_description">Quét mã để đọc trên điện thoại.</div>
+</div>
+<div class="ui_popups_customize width_310 active">
+<div class="ui_popups_customize_stack">
+<div id="id_qr_code"></div>
+</div>
+<div class="ui_popups_customize_stack">
+<div class="alert_button" onclick="UI.POPUPS.CUSTOMIZE.Hide(&#39;id_popup_qr_code&#39;)">ĐÓNG</div>
+</div>
+</div>
+</div>
+</div>
+<footer class="wrapper-section wrapper-footer">
+<div id="id_center" class="center">
+<div class="footer-top">
+<div class="footer-column-2x">
+<div class="footer-column">
+<div class="title">Trang chính</div>
+<ul>
+<li><a href="https://www.stdio.vn/iot">Internet of Things</a></li>
+<li><a href="https://www.stdio.vn/blog">Blog</a></li>
+<li><a href="https://www.stdio.vn/about">STDIO?</a></li>
+<li><a href="https://www.stdio.vn/contact">Liên Hệ</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<div class="title">Dịch vụ</div>
+<ul>
+<li><a href="https://www.stdio.vn/projects/stdio-arduino-uploader">STDIO Arduino Uploader</a></li>
+<li><a href="https://www.stdio.vn/iot">Internet of Things</a></li>
+</ul>
+</div>
+<div class="footer-column">
+<div class="title">Dịch vụ khác</div>
+<ul>
+<li><a href="https://express.stdio.vn/">Giải pháp phần mềm</a></li>
+<li><a href="https://training.stdio.vn/">Đào tạo lập trình</a></li>
+<li><a href="https://www.bugs.vn/">Chia sẻ mã nguồn</a></li>
+</ul>
+</div>
+</div> 
+<div class="footer-column-2x">
+<div class="footer-column">
+<div class="title">Cộng đồng</div>
+<ul>
+<li><a href="https://www.facebook.com/stdio.vn">STDIO page</a></li>
+<li><a href="https://www.facebook.com/training.stdio.vn">STDIO Training page</a></li>
+
+</ul>
+</div>
+<div class="footer-column">
+<ul>
+<li><a href="https://www.stdio.vn/about/read/policy">Chính Sách Bảo Mật</a></li>
+<li><a href="https://www.stdio.vn/about/read/terms">Chính Sách Hoạt Động</a></li>
+</ul>
+</div>
+</div> 
+</div> 
+<div class="footer-middle">
+<span><b>Công ty TNHH STDIO</b><br>Địa chỉ liên hệ<br>
+A18, Trung Đông plaza, 30, Trịnh Đình Thảo, Hòa Thạnh, Tân Phú, Hồ Chí Minh<br>028.36205514 - 0942.111.912 - developer@stdio.vn</span><br>
+<span>Địa chỉ công ty<br>383/1 Quang Trung, Phường 10, Quận Gò Vấp, Thành phố Hồ Chí Minh<br>Số giấy phép ĐKKD: 0311563559 do sở Kế hoạch và Đầu Tư TPHCM cấp ngày 23/02/2012</span><br>
+</div>
+<div class="footer-bottom">
+<div class="gov"><a href="http://online.gov.vn/CustomWebsiteDisplay.aspx?DocId=23061"><img src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/logo_bct.png"></a></div>
+<div class="dmca"></div>
+</div> 
+<div class="footer-bottom">
+<div class="logo"><a href="https://www.stdio.vn/"><img src="./Kỹ Thuật Grayscale Và Nhị Phân Hoá Ảnh (Adaptive Threshold) _ Bài viết _ STDIO_files/img_logo.svg" title="STDIO" alt="STDIO"></a></div>
+<div class="credit">©STDIO, 2013-2020</div>
+</div> 
+</div> 
+</footer>
+</div> 
+
+<div id="id_fc3233e203d1d0731cd1bac4edc3a3f4" style="display:none">{"STDIO_REFFER_URL":"https%3A//www.google.com/","IO_COMPONENTS_ICONS_LOADING_ICON":"%3Ci%20class%3D%22material-icons%20md-40%22%3E%26%23xE8B8%3B%3C/i%3E","comments_post_feature":"ARTICLES","comments_post_owner_id":"11","comments_post_order":"asc","comments_post_is_loaded":"1"}</div></body></html>

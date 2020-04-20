@@ -1,0 +1,36 @@
+$(function() {
+    'use strict'
+
+    var tags = [];
+    $('.input-tag').each(function () {
+        tags.push('tags:' + $(this).val());
+    });
+
+    if (tags.length === 0) {
+        tags.push('tags:news');
+    }
+
+    var excludeId = $('.input-id').val();
+
+    var apiUrl = ghost.url.api('posts', {
+        limit: 3,
+        filter: 'id:-' + excludeId + '+(' + tags.join(',') + ')'
+    });
+
+    $.get(apiUrl).done(function(data) {
+        if (data) {
+            $('.related-box').each(function(index) {
+                var post = data.posts[index];
+
+                if (post) {
+                    $(this).children('a').text(post.title);
+                    $(this).children('a').attr('href', post.url);
+
+                    if (post.feature_image) $(this).children('img').attr('src', post.feature_image);
+                }
+            });
+        }
+    }).fail(function(err) {
+        console.log(err);
+    });;
+});
