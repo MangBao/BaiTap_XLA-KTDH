@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1594302600 source:e:\baitap_xla-ktdh\anh_3d\main.c
+	<GL/gl.h>
+	<GL/glut.h>
+	<stdio.h>
+	<conio.h>
+	<math.h>
+
